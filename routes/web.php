@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
+use App\Mail\MonthlyReport;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ use App\Http\Controllers\SubmissionController;
 Route::middleware('auth')->group(function () {
     /* Dashboard */
     Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
+
+    /* Mark notification read */
     Route::post('notifications/{id}', function ($id) {
         Auth::user()->notifications()->find($id)->markAsRead();
         return redirect()->back();

@@ -10,7 +10,7 @@
 [x] Assignments\
 [x] Submissions\
 [x] Degrees for students submissions with database notifications\
-[] Monthly reports for admins with notifications via database and mail\
+[x] Monthly reports for admins with notifications via database and mail\
 [] Push custom notification / alert to specified user type by authorized users.\
 
 ---
@@ -25,3 +25,5 @@ Teachers can only edit / show / delete his own assignments. [TESTED]\
 Students can submit only one submission for assignment (if deadline didn't pass yet).[TESTED]\
 Teachers can list submissions of their assignments and give degrees for them. [TESTED]\
 When teachers degree a submission database notification will be pushed to student.[TESTED]\
+Every month a report with new assignmens and submissions for the month will be automatically sent to superadmins.\
+Also you can use `php artisan nevermore:reports` to send mailable report to admin
