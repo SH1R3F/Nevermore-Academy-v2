@@ -11,7 +11,7 @@
 [x] Submissions\
 [x] Degrees for students submissions with database notifications\
 [x] Monthly reports for admins with notifications via database and mail\
-[] Push custom notification / alert to specified user type by authorized users.\
+[x] Send both email and database notification to teachers when someone submit to their assignment\
 
 ---
 

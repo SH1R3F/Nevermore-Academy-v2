@@ -5,9 +5,10 @@ namespace App\Services;
 use App\Models\Role;
 use App\Models\Assignment;
 use App\Models\Submission;
-use App\Notifications\SubmissionDegreed;
 use App\Traits\FileUploads;
+use App\Notifications\NewSubmission;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\SubmissionDegreed;
 
 class SubmissionService
 {
@@ -20,7 +21,10 @@ class SubmissionService
         // Student id
         $data['student_id'] = Auth::user()->id; // I think there's something else like create()->for(Auth::user())??
 
-        $assignment->submissions()->create($data);
+        $submission = $assignment->submissions()->create($data);
+
+        // Send notification to teacher.
+        $assignment->teacher->notify(new NewSubmission($submission));
     }
 
     public function degreeSubmission(array $data, Submission $submission): void
