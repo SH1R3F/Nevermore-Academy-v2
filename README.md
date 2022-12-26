@@ -4,7 +4,7 @@
 
 ## TODO
 
-[] Basic authentication via fortify\
+[x] Basic authentication via fortify\
 [] ACL without a package. Via Policies\
 [] Assignments\
 [] Submissions\
@@ -15,4 +15,4 @@
 
 ## Features
 
-To be added while working.
+Users can login / register and get the basic role of a student. Other roles must be added only by admin.\

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    /* Dashboard */
+    Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
+
+    /* Roles management */
+    Route::resource('roles', RoleController::class);
+});

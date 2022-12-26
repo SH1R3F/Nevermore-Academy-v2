@@ -21,6 +21,19 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
+            @can('viewAny', 'App\Models\Role')
+                <li class="nav-item">
+                    <a class="nav-link{{ request()->routeIs('roles.index') ? ' active' : '' }}"
+                        href="{{ route('roles.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-user-run text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Roles</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('list-user')
                 <li class="nav-item">
                     <a class="nav-link{{ request()->routeIs('users.index') ? ' active' : '' }}"

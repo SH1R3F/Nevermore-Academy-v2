@@ -15,9 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $superadmin = User::factory()->create([
-            'email' => 'superadmin@nevermore.dev'
-        ]);
         User::factory(30)->create();
     }
 }
