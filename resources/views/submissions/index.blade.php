@@ -61,13 +61,6 @@
                                                 {{ $assignment->deadline->diffForHumans() }}
                                             </td>
                                             <td class="align-middle">
-                                                @can('create', ['App\Models\Submission', $assignment])
-                                                    <a href="{{ route('submissions.create', $assignment->id) }}"
-                                                        class="btn btn-primary font-weight-bold text-xs mx-1"
-                                                        data-toggle="tooltip" data-original-title="Submit assignment">
-                                                        Submit
-                                                    </a>
-                                                @endcan
                                                 @can('view', $assignment)
                                                     <a href="{{ route('assignments.show', $assignment->id) }}"
                                                         class="btn btn-primary font-weight-bold text-xs mx-1"

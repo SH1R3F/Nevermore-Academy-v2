@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\SubmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,9 @@ Route::middleware('auth')->group(function () {
 
     /* Assignments management */
     Route::resource('assignments', AssignmentController::class);
+
+    /* Students submissions to assignment */
+    Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create');
+    Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store');
+    Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show');
 });

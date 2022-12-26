@@ -39,6 +39,12 @@ return new class extends Migration
         Permission::create(['slug' => 'create-assignment']);
         Permission::create(['slug' => 'update-assignment']);
         Permission::create(['slug' => 'delete-assignment']);
+        // Submissions
+        Permission::create(['slug' => 'viewAny-submission']);
+        Permission::create(['slug' => 'view-submission']);
+        Permission::create(['slug' => 'create-submission']);
+        Permission::create(['slug' => 'update-submission']);
+        Permission::create(['slug' => 'delete-submission']);
     }
 
     /**
