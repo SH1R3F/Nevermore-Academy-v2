@@ -102,7 +102,7 @@ class SubmissionController extends Controller
      */
     public function edit(Submission $submission)
     {
-        //
+        return view('submissions.give-degree', compact('submission'));
     }
 
     /**
@@ -112,9 +112,14 @@ class SubmissionController extends Controller
      * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Submission $submission)
+    public function update(Request $request, Submission $submission, SubmissionService $service)
     {
-        //
+        // I only validate one field should I put it in a form request?
+        $data = $request->validate(['degree' => ['required', 'numeric']]);
+
+        $service->degreeSubmission($data, $submission);
+
+        return redirect()->route('assignments.show', $submission->assignment_id)->with('status', 'Submission degreed successfully');
     }
 
     /**

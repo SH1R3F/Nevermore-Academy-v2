@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
 
     /* Students submissions to assignment */
     Route::get('submissions', [SubmissionController::class, 'index'])->name('submissions.index');
+    Route::get('submissions/{submission}', [SubmissionController::class, 'edit'])->name('submissions.edit');
+    Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update');
     Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create');
     Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store');
     Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show');

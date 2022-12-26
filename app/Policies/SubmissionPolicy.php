@@ -75,7 +75,8 @@ class SubmissionPolicy
      */
     public function update(User $user, Submission $submission)
     {
-        return $user->hasPermission('update-submission');
+        // Submission must be for one of his assignments     
+        return $user->hasPermission('update-submission') && $user->assignments->contains('id', $submission->assignment_id);
     }
 
     /**

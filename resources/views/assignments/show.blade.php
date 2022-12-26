@@ -7,6 +7,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="card p-5">
+                    @if (Session::has('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <div class="d-flex align-items-center">
                         <p class="mb-0">Assignment <b>{{ $assignment->title }}</b></p>
                         @can('update', $assignment)
@@ -32,12 +38,20 @@
                     <ul>
                         @foreach ($assignment->submissions as $submission)
                             <li class="w-50">
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center justify-content-between">
                                     <p class="mb-0">{{ $submission->student->name }}</b></p>
-                                    @can('update', $assignment)
-                                        <a href="{{ route('assignments.edit', $assignment->id) }}"
-                                            class="btn btn-primary btn-sm ms-auto">Show</a>
-                                    @endcan
+                                    @if ($submission->degree)
+                                        <div>
+                                            <span class="text-bolder">Degree: {{ $submission->degree }}</span>
+                                            <a href="{{ route('submissions.edit', $submission->id) }}"
+                                                class="btn btn-default btn-sm">Show submission</a>
+                                        </div>
+                                    @else
+                                        @can('update', $submission)
+                                            <a href="{{ route('submissions.edit', $submission->id) }}"
+                                                class="btn btn-primary btn-sm ms-auto">Give degree</a>
+                                        @endcan
+                                    @endif
                                 </div>
                             </li>
                         @endforeach
