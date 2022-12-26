@@ -47,6 +47,19 @@
                 </li>
             @endcan
 
+            @can('viewAny', 'App\Models\Assignment')
+                <li class="nav-item">
+                    <a class="nav-link{{ request()->routeIs('assignments.index') ? ' active' : '' }}"
+                        href="{{ route('assignments.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-user-run text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Assignments</span>
+                    </a>
+                </li>
+            @endcan
+
         </ul>
     </div>
 </aside>

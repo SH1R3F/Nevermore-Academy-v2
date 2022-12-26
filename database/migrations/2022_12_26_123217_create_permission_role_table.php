@@ -23,7 +23,8 @@ return new class extends Migration
         });
 
         // Create the basic relations that must be implemented.
-        // Role::find(1)->permissions()->sync([1]); // Teacher
+        Role::find(2)->setPermissionsBySlugs(['viewAny-assignment', 'view-assignment', 'create-assignment', 'update-assignment', 'delete-assignment']); // Teacher
+        Role::find(3)->setPermissionsBySlugs(['viewAny-assignment']); // Student
     }
 
     /**
