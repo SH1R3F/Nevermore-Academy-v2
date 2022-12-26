@@ -24,7 +24,8 @@ class RolePolicy
             return $role->id > 3;
         };
 
-        return $user->hasRole('superadmin');
+        // We don't want to return false if not superadmin
+        if ($user->hasRole('superadmin')) return true;
     }
 
     /**

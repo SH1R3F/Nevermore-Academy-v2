@@ -21,7 +21,7 @@ class RoleService
 
         // !BREAKING CHANGE: You must not change role name for superadmin, teacher, and student
         // Any better way to do this?
-        if ($role->id < 3) unset($data['name']);
+        if ($role->id <= 3) unset($data['name']);
 
         // Store role
         $role->update($data);
