@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Assignment;
-use Carbon\Carbon;
+use App\Models\Submission;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -111,6 +112,26 @@ class AssignmentsManagementTest extends TestCase
 
         $response = $this->actingAs($teacher)->get(route('assignments.show', $assignment->id)); // seeing his assignment
         $response2 = $this->actingAs($teacher)->get(route('assignments.show', $assignment2->id)); // seeing not his assignment
+
+        $response->assertStatus(200); // success 
+        $response2->assertStatus(403); // Forbidden
+    }
+
+    /**
+     * A teacher can only degree a submission of his assignment
+     *
+     * @return void
+     */
+    public function test_teacher_can_only_degree_submission_of_his_assignments()
+    {
+        $teacher = User::factory()->create(['role_id' => 2]); // A teacher
+        $assignment = Assignment::factory()->create(['teacher_id' => $teacher->id]); // Assignment by our teacher
+        $submission = Submission::factory()->create(['assignment_id' => $assignment->id]); // Submission for our teacher's assignment
+        $submission2 = Submission::factory()->create(); // Submission by new teacher assignment
+
+
+        $response = $this->actingAs($teacher)->get(route('submissions.update', $submission->id), ['degree' => 5]); // give degree for his assignment's submission
+        $response2 = $this->actingAs($teacher)->get(route('submissions.update', $submission2->id), ['degree' => 5]); // give degree for not his assignment's submission
 
         $response->assertStatus(200); // success 
         $response2->assertStatus(403); // Forbidden

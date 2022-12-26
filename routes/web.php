@@ -35,10 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('assignments', AssignmentController::class);
 
     /* Students submissions to assignment */
-    Route::get('submissions', [SubmissionController::class, 'index'])->name('submissions.index');
-    Route::get('submissions/{submission}', [SubmissionController::class, 'edit'])->name('submissions.edit');
-    Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update');
-    Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create');
-    Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store');
-    Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show');
+    Route::get('submissions', [SubmissionController::class, 'index'])->name('submissions.index'); // List my submissions
+    Route::get('submissions/{submission}', [SubmissionController::class, 'edit'])->name('submissions.edit'); // Give degree by teacher
+    Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update'); // Give degree by teacher
+    Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create'); // Submit submission
+    Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store'); // Submit submission
+    Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
 });
