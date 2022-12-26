@@ -23,10 +23,10 @@ class RoleService
         // Any better way to do this?
         if ($role->id <= 3) unset($data['name']);
 
-        // Store role
+        // Update role
         $role->update($data);
 
-        // Store its permissions
+        // Update its permissions
         $role->setPermissionsBySlugs($data['permissions']);
     }
 }

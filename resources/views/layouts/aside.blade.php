@@ -34,7 +34,7 @@
                 </li>
             @endcan
 
-            @can('list-user')
+            @can('viewAny', 'App\Models\User')
                 <li class="nav-item">
                     <a class="nav-link{{ request()->routeIs('users.index') ? ' active' : '' }}"
                         href="{{ route('users.index') }}">

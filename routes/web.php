@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,7 @@ Route::middleware('auth')->group(function () {
 
     /* Roles management */
     Route::resource('roles', RoleController::class);
+
+    /* Users management */
+    Route::resource('users', UserController::class);
 });

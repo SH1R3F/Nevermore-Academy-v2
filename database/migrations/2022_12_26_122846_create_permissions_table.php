@@ -27,6 +27,12 @@ return new class extends Migration
         Permission::create(['slug' => 'create-role']);
         Permission::create(['slug' => 'update-role']);
         Permission::create(['slug' => 'delete-role']);
+
+        Permission::create(['slug' => 'viewAny-user']);
+        Permission::create(['slug' => 'view-user']);
+        Permission::create(['slug' => 'create-user']);
+        Permission::create(['slug' => 'update-user']);
+        Permission::create(['slug' => 'delete-user']);
     }
 
     /**
