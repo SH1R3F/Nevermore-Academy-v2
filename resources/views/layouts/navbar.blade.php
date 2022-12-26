@@ -28,12 +28,6 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <a class="text-sm font-weight-normal mb-1 bg-transparent w-100 text-center py-1 d-block"
-                                        href="#">
-                                        Profile
-                                    </a>
-                                </li>
-                                <li>
                                     <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                                         @csrf
                                         <button
