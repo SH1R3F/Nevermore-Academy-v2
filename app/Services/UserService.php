@@ -23,8 +23,13 @@ class UserService
 
     public function update(array $data, User $user): void
     {
-        // Password is optional to be updated
-        if (!$data['password']) unset($data['password']);
+        if (isset($data['password']) && $data['password']) {
+            // Hash password
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            // Password is optional to be updated
+            unset($data['password']);
+        }
 
         // You must not change superadmin role
         // Any better way to do this?

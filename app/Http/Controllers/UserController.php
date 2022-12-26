@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
+use App\Policies\UserPolicy;
 use App\Services\UserService;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     /**
      * Display a listing of the resource.
      *
