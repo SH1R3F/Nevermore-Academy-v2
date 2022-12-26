@@ -20,6 +20,10 @@ use App\Http\Controllers\SubmissionController;
 Route::middleware('auth')->group(function () {
     /* Dashboard */
     Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
+    Route::post('notifications/{id}', function ($id) {
+        Auth::user()->notifications()->find($id)->markAsRead();
+        return redirect()->back();
+    })->name('notifications.read');
 
     /* Roles management */
     Route::resource('roles', RoleController::class);

@@ -52,26 +52,40 @@
                             </a>
                             <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
                                 aria-labelledby="dropdownMenuButton" style="top: .5rem !important;">
-                                @foreach ([1, 2, 3] as $x)
+                                @forelse ($notifications as $notification)
                                     <li class="mb-2">
-                                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                                        <a class="dropdown-item border-radius-md"
+                                            href="{{ $notification->data['link'] }}">
                                             <div class="d-flex py-1">
                                                 <div class="my-auto">
-                                                    <button class="me-3 btn btn-default">read</button>
+                                                    <form action="{{ route('notifications.read', $notification->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="me-3 btn btn-default">read</button>
+                                                    </form>
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="text-sm font-weight-normal mb-1">
-                                                        Notification
+                                                        {{ $notification->data['message'] }}
                                                     </h6>
                                                     <p class="text-xs text-secondary mb-0">
                                                         <i class="fa fa-clock me-1"></i>
-                                                        13 minutes ago
+                                                        {{ $notification->created_at->diffForHumans() }}
                                                     </p>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                @endforeach
+                                @empty
+                                    <li>
+                                        <a class="dropdown-item border-radius-md">
+                                            <h6 class="text-sm font-weight-normal mb-1">
+                                                You are up to date. New notifications will appear here
+                                            </h6>
+                                        </a>
+                                    </li>
+                                @endforelse
                             </ul>
                         </li>
                     </ul>
