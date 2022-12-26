@@ -66,7 +66,9 @@ class AssignmentController extends Controller
      */
     public function show(Assignment $assignment)
     {
-        return view('assignments.show', compact('assignment'));
+        return view('assignments.show', [
+            'assignment' => $assignment->load('submissions', 'submissions.student')->loadCount('submissions')
+        ]);
     }
 
     /**

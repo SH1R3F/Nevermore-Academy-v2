@@ -25,29 +25,22 @@
 
                     <p class="mb-0">Total submissions:
                         <span class="text-bolder">
-                            too be added
+                            {{ $assignment->submissions_count ?: 'No submissions yet' }}
                         </span>
                     </p>
 
                     <ul>
-                        <li class="w-50">
-                            <div class="d-flex align-items-center">
-                                <p class="mb-0">To be added</b></p>
-                                @can('update', $assignment)
-                                    <a href="{{ route('assignments.edit', $assignment->id) }}"
-                                        class="btn btn-primary btn-sm ms-auto">Show</a>
-                                @endcan
-                            </div>
-                        </li>
-                        <li class="w-50">
-                            <div class="d-flex align-items-center">
-                                <p class="mb-0">To be added</b></p>
-                                @can('update', $assignment)
-                                    <a href="{{ route('assignments.edit', $assignment->id) }}"
-                                        class="btn btn-primary btn-sm ms-auto">Show</a>
-                                @endcan
-                            </div>
-                        </li>
+                        @foreach ($assignment->submissions as $submission)
+                            <li class="w-50">
+                                <div class="d-flex align-items-center">
+                                    <p class="mb-0">{{ $submission->student->name }}</b></p>
+                                    @can('update', $assignment)
+                                        <a href="{{ route('assignments.edit', $assignment->id) }}"
+                                            class="btn btn-primary btn-sm ms-auto">Show</a>
+                                    @endcan
+                                </div>
+                            </li>
+                        @endforeach
                     </ul>
 
                 </div>

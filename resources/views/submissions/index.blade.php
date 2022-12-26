@@ -67,7 +67,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="3" class="text-center">No submissions found</td>
+                                            <td colspan="5" class="text-center">You don't have any submissions yet</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
