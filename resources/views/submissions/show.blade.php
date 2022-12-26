@@ -7,6 +7,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="card p-5">
+                    @if (Session::has('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <div class="d-flex align-items-center">
                         <p class="mb-0">Your submission for assignment <b>{{ $assignment->title }}</b></p>
                     </div>

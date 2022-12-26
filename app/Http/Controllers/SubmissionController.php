@@ -33,7 +33,12 @@ class SubmissionController extends Controller
      */
     public function index()
     {
-        //
+        $submissions = Submission::with('assignment', 'assignment.teacher')
+            ->where('student_id', Auth::user()->id)
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
+
+        return view('submissions.index', compact('submissions'));
     }
 
     /**
