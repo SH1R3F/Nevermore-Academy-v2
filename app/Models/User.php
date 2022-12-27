@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 use App\Models\Role;
 use App\Traits\HasRoles;
 use App\Models\Assignment;
 use App\Traits\MustVerifyMobile;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 
-class User extends Authenticatable implements MustVerifyMobileInterface, MustVerifyEmail
+class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ MustVerifyEmail, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, MustVerifyMobile;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, MustVerifyMobile, InteractsWithMedia;
 
-    const MOBILE_FORMAT = "/^01[0125][0-9]{8}$/";
+    const MOBILE_FORMAT = "/^01[0125][0-9]{8}$/"; // In case i needed to change it later (for example: allow other country codes); Also to reuse it in other pages too.
 
     /**
      * The attributes that are mass assignable.

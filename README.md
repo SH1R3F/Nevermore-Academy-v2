@@ -12,10 +12,10 @@
 [x] Degrees for students submissions with database notifications\
 [x] Monthly reports for admins with notifications via database and mail\
 [x] Send both email and database notification to teachers when someone submit to their assignment\
-[] Profile pictures for users when they register or being managed from dashboard (Spatie media library)\
+[x] Profile pictures for users when they register or being managed from dashboard (Spatie media library)\
 [x] Mobile verification\
 [x] Email verification\
-[] Two factor authentication\
+[] Two factor authentication (without a package & without using the default fortify 2fa feature)\
 [] Push notification to chosen types (mail, db, and sms)\
 
 ---
@@ -36,4 +36,7 @@ Also you can use `php artisan nevermore:reports` to send mailable report to admi
 Mobile verification done using twilio and twilio-notification-channel package\
 Users are required to verify their mobile number in order to use our services\
 Users are not required to verify their email but they will always have an alert that they need to verify their email or they won't receive any email notification\
-A listener is hooked to NotificationSending event that will fail any notification that is sent to a user that didn't verify his email;
+A listener is hooked to NotificationSending event that will fail any notification that is sent to a user that didn't verify his email;\
+If admin changes user email or mobile verification is reset and resent (Only if User model is implementing required interfaces)\
+On user registration they are required to upload their profile pictures which is handled by Spatie media library.\
+When user is edited / deleted media is automatically deleted / updated\

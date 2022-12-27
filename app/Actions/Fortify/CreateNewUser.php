@@ -3,9 +3,11 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\File;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class CreateNewUser implements CreatesNewUsers
@@ -35,9 +37,10 @@ class CreateNewUser implements CreatesNewUsers
                 'unique:users',
             ],
             'password' => $this->passwordRules(),
+            'image' => ['required', File::types(['jpg', 'png', 'gif'])->max(12 * 1024)]
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'mobile' => $input['mobile'],
@@ -45,5 +48,12 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             'role_id' => 3
         ]);
+
+        // Upload profile picture
+        $user->addMediaFromRequest('image')->toMediaCollection('images');
+
+        event(new Registered($user));
+
+        return $user;
     }
 }

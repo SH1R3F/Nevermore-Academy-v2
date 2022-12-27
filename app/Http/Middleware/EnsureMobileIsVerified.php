@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Interfaces\MustVerifyMobile;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,8 @@ class EnsureMobileIsVerified
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->hasVerifiedMobile()) return $next($request); // عدي يسطا       
+        // Even if this middleware is used. it won't run unless user is implementing MustVerifyMobile
+        if (!Auth::user() instanceof MustVerifyMobile || (Auth::check() && Auth::user()->hasVerifiedMobile())) return $next($request); // عدي يسطا       
 
         return redirect()->route('verify-mobile.notice');
     }

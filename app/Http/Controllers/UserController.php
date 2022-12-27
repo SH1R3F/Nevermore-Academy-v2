@@ -106,6 +106,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // Delete his media!
+        $user->clearMediaCollection();
         $user->delete();
         return redirect()->back()->with('status', 'User deleted successfully');
     }

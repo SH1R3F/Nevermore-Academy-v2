@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class UserRequest extends FormRequest
 {
@@ -32,6 +33,11 @@ class UserRequest extends FormRequest
                 Rule::when(request()->isMethod('POST'), Rule::unique('users'), Rule::unique('users')->ignore($this->user)),
                 'max:255'
             ],
+            'mobile' => [
+                'required',
+                'numeric',
+                Rule::when(request()->isMethod('POST'), Rule::unique('users'), Rule::unique('users')->ignore($this->user)),
+            ],
             'password' => [
                 Rule::when(request()->isMethod('POST'), 'required', 'nullable'),
                 'string',
@@ -39,7 +45,11 @@ class UserRequest extends FormRequest
                 'max:255',
                 'confirmed'
             ],
-            'role' => ['required', 'exists:roles,id']
+            'role' => ['required', 'exists:roles,id'],
+            'image' => [
+                Rule::when(request()->isMethod('POST'), 'required', 'nullable'),
+                File::types(['png', 'jpg', 'gif'])->max(10 * 1024)
+            ]
         ];
     }
 }

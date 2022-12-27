@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <form method="POST" action="{{ route('users.store') }}">
+                    <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
@@ -38,6 +38,27 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="mobile" class="form-control-label">Mobile</label>
+                                        <input class="form-control" id="mobile" type="text" name="mobile"
+                                            value="{{ old('mobile') }}">
+                                        @error('mobile')
+                                            <span class="text-danger text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="image" class="form-control-label">Profile picture</label>
+                                        <input class="form-control" id="image" type="file" name="image">
+                                        @error('image')
+                                            <span class="text-danger text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="password" class="form-control-label">Password</label>

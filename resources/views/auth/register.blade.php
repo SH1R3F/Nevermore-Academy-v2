@@ -21,7 +21,7 @@
             <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
                 <div class="card z-index-0">
                     <div class="card-body">
-                        <form role="form" method="POST" action="{{ route('register') }}">
+                        <form role="form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <input name="name" type="text" class="form-control" placeholder="Name"
@@ -54,6 +54,14 @@
                             <div class="mb-3">
                                 <input name="password_confirmation" type="password" class="form-control"
                                     placeholder="Confirm password" aria-label="Password">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image">Profile picture
+                                </label>
+                                <input name="image" id="image" type="file" class="form-control">
+                                @error('image')
+                                    <span class="text-danger text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>

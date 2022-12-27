@@ -43,7 +43,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
-                                                        <img src="{{ asset('assets/img/logo.webp') }}"
+                                                        <img src="{{ $user->getFirstMediaUrl('images') ?: asset('assets/img/logo.webp') }}"
                                                             class="avatar avatar-sm me-3" alt="user1">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
