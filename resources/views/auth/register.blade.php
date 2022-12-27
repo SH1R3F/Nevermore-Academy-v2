@@ -25,15 +25,22 @@
                             @csrf
                             <div class="mb-3">
                                 <input name="name" type="text" class="form-control" placeholder="Name"
-                                    aria-label="Name">
+                                    aria-label="Name" value="{{ old('name') }}">
                                 @error('name')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <input name="email" type="email" class="form-control" placeholder="Email"
-                                    aria-label="Email">
+                                    aria-label="Email" value="{{ old('email') }}">
                                 @error('email')
+                                    <span class="text-danger text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <input name="mobile" type="text" class="form-control"
+                                    placeholder="Mobile; eg: 01234567890" aria-label="Mobile" value="{{ old('mobile') }}">
+                                @error('mobile')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 use App\Models\Role;
 use App\Traits\HasRoles;
 use App\Models\Assignment;
+use App\Traits\MustVerifyMobile;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,9 +16,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyMobileInterface
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, MustVerifyMobile;
+
+    const MOBILE_FORMAT = "/^01[0125][0-9]{8}$/";
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +30,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'mobile',
         'password',
+        'mobile_verification_code',
         'role_id'
     ];
 
@@ -37,6 +44,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'mobile_verification_code'
     ];
 
     /**
@@ -46,7 +54,23 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'mobile_verified_at' => 'datetime',
     ];
+
+    public function getPhoneNumberAttribute()
+    {
+        // We suppose all our users are Egyptian.
+        // Otherwise I would add another column and ask user to enter his country code.
+        return "+2{$this->mobile}"; // Ex; +201003322304
+    }
+
+    /**
+     * Tell twilio the notifiable (user) phone number
+     */
+    public function routeNotificationForTwilio()
+    {
+        return $this->phone_number;
+    }
 
     public function role(): BelongsTo
     {

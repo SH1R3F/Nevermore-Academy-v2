@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\Auth\MobileVerificationController;
 use App\Http\Controllers\SubmissionController;
 use App\Mail\MonthlyReport;
 
@@ -18,7 +19,15 @@ use App\Mail\MonthlyReport;
 |
 */
 
+
 Route::middleware('auth')->group(function () {
+    Route::get('verify-mobile', [MobileVerificationController::class, 'showVerifyForm'])->name('verify-mobile.notice');
+    Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');
+    Route::get('verify-mobile/resend', [MobileVerificationController::class, 'resend'])->name('verify-mobile.resend')->middleware('throttle:6,1');
+});
+
+
+Route::middleware(['auth', 'mobile-verified'])->group(function () {
     /* Dashboard */
     Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
 

@@ -29,13 +29,21 @@ class CreateNewUser implements CreatesNewUsers
                 'max:255',
                 Rule::unique(User::class),
             ],
+            'mobile' => [
+                'required',
+                'regex:' . User::MOBILE_FORMAT,
+                'unique:users',
+            ],
             'password' => $this->passwordRules(),
         ])->validate();
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
+            'mobile' => $input['mobile'],
+            'mobile_verification_code' => rand(111111, 999999),
             'password' => Hash::make($input['password']),
+            'role_id' => 3
         ]);
     }
 }
