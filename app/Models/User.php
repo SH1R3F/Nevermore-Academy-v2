@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 use App\Models\Role;
 use App\Traits\HasRoles;
@@ -16,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements MustVerifyMobileInterface
+class User extends Authenticatable implements MustVerifyMobileInterface, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, MustVerifyMobile;
 

@@ -86,3 +86,22 @@
                 </div>
             </div>
         </nav>
+        @if (!Auth::user()->hasVerifiedEmail())
+            <div class="alert alert-info" role="alert">
+                <h6 class="m-0">
+                    You didn't verify your email address and you won't be able to receive any email notification from
+                    us.
+                    <br>
+                    Please click on the link sent to your email or <form class="d-inline" method="POST"
+                        action="{{ route('verification.send') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-sm">Resend verification email</button>
+                    </form>
+                </h6>
+            </div>
+            @if (Session::has('status') && session('status') === 'verification-link-sent')
+                <div class="alert alert-info" role="alert">
+                    Email verification has been sent to your email.
+                </div>
+            @endif
+        @endif

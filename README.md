@@ -14,7 +14,7 @@
 [x] Send both email and database notification to teachers when someone submit to their assignment\
 [] Profile pictures for users when they register or being managed from dashboard (Spatie media library)\
 [x] Mobile verification\
-[] Email verification\
+[x] Email verification\
 [] Two factor authentication\
 [] Push notification to chosen types (mail, db, and sms)\
 
@@ -33,4 +33,7 @@ When teachers degree a submission database notification will be pushed to studen
 Every month a report with new assignmens and submissions for the month will be automatically sent to superadmins.\
 Also you can use `php artisan nevermore:reports` to send mailable report to admin\
 
-Mobile verification done using twilio and twilio-notification-channel package
+Mobile verification done using twilio and twilio-notification-channel package\
+Users are required to verify their mobile number in order to use our services\
+Users are not required to verify their email but they will always have an alert that they need to verify their email or they won't receive any email notification\
+A listener is hooked to NotificationSending event that will fail any notification that is sent to a user that didn't verify his email;

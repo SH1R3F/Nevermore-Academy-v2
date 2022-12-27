@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
-use App\Listeners\SendMobileVerificationNotification;
+use App\Listeners\ExcludeUnverifiedEmailNotification;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\SendMobileVerificationNotification;
+use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             SendMobileVerificationNotification::class
         ],
+        NotificationSending::class => [
+            ExcludeUnverifiedEmailNotification::class
+        ]
     ];
 
     /**
