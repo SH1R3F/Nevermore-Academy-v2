@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssignmentController;
-use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\MobileVerificationController;
+use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\SubmissionController;
 
 /*
@@ -22,13 +22,21 @@ use App\Http\Controllers\SubmissionController;
 /* Mobile verification routes */
 //
 Route::middleware('auth')->group(function () {
+    // Mobile verification
     Route::get('verify-mobile', [MobileVerificationController::class, 'showVerifyForm'])->name('verify-mobile.notice');
     Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');
     Route::get('verify-mobile/resend', [MobileVerificationController::class, 'resend'])->name('verify-mobile.resend')->middleware('throttle:6,1');
+
+    // 2 Factor Authentication
+    Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'showChooseForm'])->name('2fa.choose');
+    Route::post('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'send'])->name('2fa.send');
+    Route::get('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'showVerifyForm'])->name('2fa.notice');
+    Route::post('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.verify');
+    Route::get('/two-factor-authentication/resend', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
 });
 
 
-Route::middleware(['auth', 'mobile-verified'])->group(function () {
+Route::middleware(['auth', 'mobile-verified', '2fa'])->group(function () {
     /* Dashboard */
     Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
 

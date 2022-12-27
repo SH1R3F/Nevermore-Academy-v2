@@ -9,18 +9,20 @@ use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class VerifyMobile extends Notification
+class SendTwoFactorAuthenticationCode extends Notification
 {
     use Queueable;
+
+    public $via;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($via)
     {
-        //
+        $this->via = in_array($via, ['mail', 'sms']) ? $via : 'mail'; // Set mail as default
     }
 
     /**
@@ -31,7 +33,21 @@ class VerifyMobile extends Notification
      */
     public function via($notifiable)
     {
-        return [TwilioChannel::class];
+        return [$this->via === 'sms' ? TwilioChannel::class : 'mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line('This is your two factor authentication code.')
+            ->line('Please don\'t share it with anyone.')
+            ->line($notifiable->two_fa_code);
     }
 
     /**
@@ -43,6 +59,6 @@ class VerifyMobile extends Notification
     public function toTwilio($notifiable)
     {
         return (new TwilioSmsMessage)
-            ->content("Your verification code for Nevermore is: {$notifiable->mobile_verification_code}");
+            ->content("Your 2fa code for Nevermore is: {$notifiable->two_fa_code}");
     }
 }

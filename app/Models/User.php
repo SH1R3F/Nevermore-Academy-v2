@@ -5,9 +5,12 @@ namespace App\Models;
 use App\Models\Role;
 use App\Traits\HasRoles;
 use App\Models\Assignment;
+use Illuminate\Http\Request;
 use App\Traits\MustVerifyMobile;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
+use App\Interfaces\MustVerifyTwoFactor;
+use App\Traits\TwoFactorAuthentication;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,9 +20,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 
-class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ MustVerifyEmail, HasMedia
+class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ MustVerifyEmail, HasMedia, MustVerifyTwoFactor
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, MustVerifyMobile, InteractsWithMedia;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        HasRoles,
+        MustVerifyMobile,
+        InteractsWithMedia,
+        TwoFactorAuthentication;
 
     const MOBILE_FORMAT = "/^01[0125][0-9]{8}$/"; // In case i needed to change it later (for example: allow other country codes); Also to reuse it in other pages too.
 
@@ -34,6 +43,7 @@ class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ Mu
         'mobile',
         'password',
         'mobile_verification_code',
+        'two_fa_code',
         'role_id'
     ];
 
@@ -45,7 +55,8 @@ class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ Mu
     protected $hidden = [
         'password',
         'remember_token',
-        'mobile_verification_code'
+        'mobile_verification_code',
+        'two_fa_code',
     ];
 
     /**
@@ -56,6 +67,7 @@ class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ Mu
     protected $casts = [
         'email_verified_at' => 'datetime',
         'mobile_verified_at' => 'datetime',
+        'two_fa_expires_at' => 'datetime',
     ];
 
     public function getPhoneNumberAttribute()

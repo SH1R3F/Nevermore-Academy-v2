@@ -13,13 +13,14 @@ class MobileVerificationController extends Controller
     public function showVerifyForm()
     {
         if (Auth::user()->hasVerifiedMobile()) return redirect(RouteServiceProvider::HOME);
-
         return view('auth.verify-mobile');
     }
 
     public function verify(Request $request)
     {
         $user = Auth::user();
+        if ($user->hasVerifiedMobile()) return redirect(RouteServiceProvider::HOME);
+
         $request->validate([
             'code' => ['required', 'numeric', function ($attribute, $value, $fail) use ($user) {
                 if ($value != $user->mobile_verification_code) $fail("The $attribute is incorrect");
@@ -27,10 +28,7 @@ class MobileVerificationController extends Controller
         ]);
 
         // Code is correct.
-        $user->forceFill([
-            'mobile_verified_at' => now(),
-            'mobile_verification_code' => null
-        ])->save();
+        $user->markMobileAsVerified();
 
         // Redirect
         return redirect(RouteServiceProvider::HOME);
@@ -39,8 +37,7 @@ class MobileVerificationController extends Controller
     public function resend()
     {
         $user = Auth::user();
-        // Generate new code [OPTIONAL]
-        // $user->update(['mobile_verification_code' => rand(111111,999999)]);
+        if ($user->hasVerifiedMobile()) return redirect(RouteServiceProvider::HOME);
 
         // Resend code
         $user->sendMobileVerificationNotification();

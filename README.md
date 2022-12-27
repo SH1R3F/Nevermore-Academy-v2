@@ -15,7 +15,7 @@
 [x] Profile pictures for users when they register or being managed from dashboard (Spatie media library)\
 [x] Mobile verification\
 [x] Email verification\
-[] Two factor authentication (without a package & without using the default fortify 2fa feature)\
+[x] Two factor authentication (without a package & without using the default fortify 2fa feature)\
 [] Push notification to chosen types (mail, db, and sms)\
 
 ---
@@ -40,3 +40,6 @@ A listener is hooked to NotificationSending event that will fail any notificatio
 If admin changes user email or mobile verification is reset and resent (Only if User model is implementing required interfaces)\
 On user registration they are required to upload their profile pictures which is handled by Spatie media library.\
 When user is edited / deleted media is automatically deleted / updated\
+What i wanna do is: if user login with a verified email or a verified mobile he will be automatically asked for a 2fa code sent upon his choice either via email or via mobile. otherwise (if user didn't verify any he will be logged in normally.) [DONE]\
+When user log in (If he has one option verified email|mobile) He will be automatically asked to verify 2FA to be able to use our service.\
+2FA verification method is optional. user can choose between mobile and email.

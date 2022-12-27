@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('mobile');
             $table->integer('mobile_verification_code')->nullable();
             $table->timestamp('mobile_verified_at')->nullable();
+            $table->integer('two_fa_code')->nullable();
+            $table->timestamp('two_fa_expires_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

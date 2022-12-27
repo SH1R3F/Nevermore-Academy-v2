@@ -24,7 +24,8 @@ trait MustVerifyMobile
     public function markMobileAsVerified()
     {
         return $this->forceFill([
-            'mobile_verified_at' => now()
+            'mobile_verified_at' => now(),
+            'mobile_verification_code' => null
         ])->save();
     }
 
@@ -35,6 +36,9 @@ trait MustVerifyMobile
      */
     public function sendMobileVerificationNotification()
     {
+        // Generate new code [OPTIONAL]
+        // $this->update(['mobile_verification_code' => rand(111111,999999)]);
+
         $this->notify(new VerifyMobile);
     }
 
