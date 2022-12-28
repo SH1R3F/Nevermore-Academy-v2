@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use App\Interfaces\MustVerifyTwoFactor;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
 
 class TwoFactorAuthenticationController extends Controller
 {
@@ -17,7 +18,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function showChooseForm()
     {
-        if (!$this->shouldIBeHere()) return redirect(RouteServiceProvider::HOME);
+        if ($this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
         return view('auth.2fa-choose');
     }
 
@@ -26,7 +27,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function send(Request $request)
     {
-        if (!$this->shouldIBeHere()) return redirect(RouteServiceProvider::HOME);
+        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
 
         $user = Auth::user();
         $request->validate(['choice' => ['required', 'in:sms,mail']]);
@@ -42,7 +43,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function showVerifyForm()
     {
-        if (!$this->shouldIBeHere()) return redirect(RouteServiceProvider::HOME);
+        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
         return view('auth.2fa-verify');
     }
 
@@ -51,7 +52,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function verify(Request $request)
     {
-        if (!$this->shouldIBeHere()) return redirect(RouteServiceProvider::HOME);
+        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
 
         $user = Auth::user();
         $request->validate([
@@ -80,15 +81,16 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function resend()
     {
-        if (!$this->shouldIBeHere()) return redirect(RouteServiceProvider::HOME);
+        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
         if (Session::has('2fa_choice')) Auth::user()->sendTwoFactorAuthenticationNotification(session('2fa_choice'));
         return redirect()->back()->with('status', "A verification code has been resent");
     }
 
-    public function shouldIBeHere()
+    public function iShouldntBeHere()
     {
         $user = Auth::user();
-        return !(!$user instanceof MustVerifyTwoFactor || // If not implementing interface
+
+        return (!$user instanceof MustVerifyTwoFactor || // If not implementing interface
             $user->hasVerifiedTwoFactorAuthentication() || // Already verified
             (!$user->hasVerifiedMobile() && !$user->hasVerifiedEmail()) // Has nothing verified yet. (We don't want to lock him out)
         );

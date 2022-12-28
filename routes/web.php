@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\Auth\MobileVerificationController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SubmissionController;
 
 /*
@@ -45,6 +46,12 @@ Route::middleware(['auth', 'mobile-verified', '2fa'])->group(function () {
         Auth::user()->notifications()->find($id)->markAsRead();
         return redirect()->back();
     })->name('notifications.read');
+
+    /* Notifications management */
+    Route::middleware('role:superadmin')->group(function () {
+        Route::get('/push-notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+        Route::post('/push-notifications/create', [NotificationController::class, 'store'])->name('notifications.store');
+    });
 
     /* Roles management */
     Route::resource('roles', RoleController::class);

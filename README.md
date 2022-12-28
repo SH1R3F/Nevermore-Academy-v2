@@ -16,7 +16,7 @@
 [x] Mobile verification\
 [x] Email verification\
 [x] Two factor authentication (without a package & without using the default fortify 2fa feature)\
-[] Push notification to chosen types (mail, db, and sms)\
+[x] Push notification to chosen types (mail, db, and sms)\
 
 ---
 
@@ -43,3 +43,4 @@ When user is edited / deleted media is automatically deleted / updated\
 What i wanna do is: if user login with a verified email or a verified mobile he will be automatically asked for a 2fa code sent upon his choice either via email or via mobile. otherwise (if user didn't verify any he will be logged in normally.) [DONE]\
 When user log in (If he has one option verified email|mobile) He will be automatically asked to verify 2FA to be able to use our service.\
 2FA verification method is optional. user can choose between mobile and email.
+Superadmin can push a notification message for the type of users he can choose (all superadmins, all teachers, or all students) as well as choosing which type of notifications (sms, email, in-app notifications, or all).
