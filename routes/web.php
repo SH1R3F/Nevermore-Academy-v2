@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'mobile-verified', '2fa'])->group(function () {
     /* Dashboard */
-    Route::view('/', 'dashboard')->name('dashboard')->middleware('auth');
+    Route::view('/', 'dashboard')->name('dashboard');
 
     /* Mark notification read */
     Route::post('notifications/{id}', function ($id) {
