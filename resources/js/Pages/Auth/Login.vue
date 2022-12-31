@@ -13,6 +13,7 @@ export default { layout: Guest };
 </script>
 
 <template>
+    <Head title="Login" />
     <section>
         <div class="page-header min-vh-100">
             <div class="container">

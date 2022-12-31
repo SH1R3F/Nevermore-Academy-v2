@@ -16,6 +16,7 @@ const form = useForm({
 });
 </script>
 <template>
+    <Head title="Push notifications" />
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">

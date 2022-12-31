@@ -29,7 +29,18 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::paginate(10);
-        return view('roles.index', compact('roles'));
+        $user = request()->user();
+
+        return inertia('Roles/Index', [
+            'roles' => $roles->through(function ($role) use ($user) {
+                $role->editable = $user->can('update', $role);
+                $role->deleteable = $user->can('delete', $role);
+                return $role;
+            }),
+            'can' => [
+                'create_role' => $user->can('create', Role::class)
+            ]
+        ]);
     }
 
     /**
@@ -40,7 +51,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::orderBy('id')->get(['slug', 'description']);
-        return view('roles.create', compact('permissions'));
+        return inertia('Roles/Create', compact('permissions'));
     }
 
     /**
@@ -76,7 +87,13 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::orderBy('id')->get(['slug', 'description']);
-        return view('roles.edit', compact('permissions', 'role'));
+        return inertia('Roles/Edit', [
+            'role' => $role,
+            'permissions' => $permissions->map(function ($permission) use ($role) {
+                $permission->taken = $role->hasPermission($permission->slug);
+                return $permission;
+            })
+        ]);
     }
 
     /**
