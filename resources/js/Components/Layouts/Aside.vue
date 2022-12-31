@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
     <aside
         class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
@@ -9,12 +11,18 @@
                 aria-hidden="true"
                 id="iconSidenav"
             ></i>
-            <a class="navbar-brand m-0" href="#">
-                <img src="#" class="navbar-brand-img h-100" alt="main_logo" />
-                <span class="ms-1 font-weight-bold">{{
-                    'config("app.name")'
-                }}</span>
-            </a>
+            <Link class="navbar-brand m-0" href="/">
+                <img
+                    :src="
+                        $page.props.authUser.avatar || '/assets/img/logo.webp'
+                    "
+                    class="navbar-brand-img h-100"
+                    alt="Avatar"
+                />
+                <span class="ms-1 font-weight-bold">
+                    {{ $page.props.APP_NAME }}
+                </span>
+            </Link>
         </div>
         <hr class="horizontal dark mt-0" />
         <div
@@ -23,7 +31,11 @@
         >
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <Link
+                        class="nav-link"
+                        :class="{ active: $page.component === 'Dashboard' }"
+                        href="/"
+                    >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
                         >
@@ -32,11 +44,20 @@
                             ></i>
                         </div>
                         <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
 
-                <li class="nav-item" v-if="false">
-                    <a class="nav-link" href="#">
+                <li
+                    class="nav-item"
+                    v-if="$page.props.authUser.role == 'superadmin'"
+                >
+                    <Link
+                        class="nav-link"
+                        :class="{
+                            active: $page.url.startsWith('push-notifications'),
+                        }"
+                        href="/push-notifications/create"
+                    >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
                         >
@@ -47,10 +68,20 @@
                         <span class="nav-link-text ms-1"
                             >Create a notification</span
                         >
-                    </a>
+                    </Link>
                 </li>
-                <li class="nav-item" v-if="false">
-                    <a class="nav-link" href="#">
+
+                <li
+                    class="nav-item"
+                    v-if="$page.props.authUser.can.viewAny_role"
+                >
+                    <Link
+                        class="nav-link"
+                        :class="{
+                            active: $page.url.startsWith('roles'),
+                        }"
+                        href="/roles"
+                    >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
                         >
@@ -59,10 +90,19 @@
                             ></i>
                         </div>
                         <span class="nav-link-text ms-1">Roles</span>
-                    </a>
+                    </Link>
                 </li>
-                <li class="nav-item" v-if="false">
-                    <a class="nav-link" href="#">
+                <li
+                    class="nav-item"
+                    v-if="$page.props.authUser.can.viewAny_user"
+                >
+                    <Link
+                        class="nav-link"
+                        :class="{
+                            active: $page.url.startsWith('users'),
+                        }"
+                        href="/users"
+                    >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
                         >
@@ -71,10 +111,19 @@
                             ></i>
                         </div>
                         <span class="nav-link-text ms-1">Users</span>
-                    </a>
+                    </Link>
                 </li>
-                <li class="nav-item" v-if="false">
-                    <a class="nav-link" href="#">
+                <li
+                    class="nav-item"
+                    v-if="$page.props.authUser.can.viewAny_assignment"
+                >
+                    <Link
+                        class="nav-link"
+                        :class="{
+                            active: $page.url.startsWith('assignments'),
+                        }"
+                        href="/assignments"
+                    >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
                         >
@@ -83,10 +132,19 @@
                             ></i>
                         </div>
                         <span class="nav-link-text ms-1">Assignments</span>
-                    </a>
+                    </Link>
                 </li>
-                <li class="nav-item" v-if="false">
-                    <a class="nav-link" href="#">
+                <li
+                    class="nav-item"
+                    v-if="$page.props.authUser.can.viewAny_submission"
+                >
+                    <Link
+                        class="nav-link"
+                        :class="{
+                            active: $page.url.startsWith('submissions'),
+                        }"
+                        href="/submissions"
+                    >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
                         >
@@ -95,7 +153,7 @@
                             ></i>
                         </div>
                         <span class="nav-link-text ms-1">Submissions</span>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>

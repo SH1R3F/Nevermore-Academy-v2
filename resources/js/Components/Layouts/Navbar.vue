@@ -39,7 +39,7 @@
                         >
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">{{
-                                "auth()->user()->name"
+                                $page.props.authUser.name
                             }}</span>
                         </a>
                         <ul
@@ -51,7 +51,7 @@
                                 <span
                                     class="text-sm font-weight-normal mb-1 d-block text-center text-muted"
                                 >
-                                    Role: {{ "auth()->user()->role?->name" }}
+                                    Role: {{ $page.props.authUser.role }}
                                 </span>
                             </li>
                             <li>
@@ -83,21 +83,25 @@
                             aria-labelledby="dropdownMenuButton"
                             style="top: 0.5rem !important"
                         >
-                            <li class="mb-2" v-for="i in []">
-                                <a
+                            <li
+                                class="mb-2"
+                                v-for="notification in $page.props.authUser
+                                    .notifications"
+                            >
+                                <Link
                                     class="dropdown-item border-radius-md"
-                                    href="#"
+                                    :href="notification.data.link"
                                 >
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
-                                            <form action="#" method="POST">
-                                                <button
-                                                    type="submit"
-                                                    class="me-3 btn btn-default"
-                                                >
-                                                    read
-                                                </button>
-                                            </form>
+                                            <Link
+                                                :href="`notifications/${notification.id}`"
+                                                method="post"
+                                                as="button"
+                                                class="me-3 btn btn-default"
+                                            >
+                                                read
+                                            </Link>
                                         </div>
                                         <div
                                             class="d-flex flex-column justify-content-center"
@@ -105,19 +109,23 @@
                                             <h6
                                                 class="text-sm font-weight-normal mb-1"
                                             >
-                                                $notification->data['message']
+                                                {{ notification.data.message }}
                                             </h6>
                                             <p
                                                 class="text-xs text-secondary mb-0"
                                             >
                                                 <i class="fa fa-clock me-1"></i>
-                                                $notification->created_at->diffForHumans()
+                                                {{ notification.created_at }}
                                             </p>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </li>
-                            <li>
+                            <li
+                                v-if="
+                                    !$page.props.authUser.notifications.length
+                                "
+                            >
                                 <a class="dropdown-item border-radius-md">
                                     <h6 class="text-sm font-weight-normal mb-1">
                                         You are up to date. New notifications
@@ -131,20 +139,29 @@
             </div>
         </div>
     </nav>
-    <div class="alert alert-info" role="alert" v-if="true">
-        <h6 class="m-0">
-            You didn't verify your email address and you won't be able to
-            receive any email notification from us.
-            <br />
-            Please click on the link sent to your email or
-            <form class="d-inline" method="POST" action="#">
-                <button type="submit" class="btn btn-primary btn-sm">
+    <template v-if="!$page.props.authUser.verified">
+        <div class="alert alert-info" role="alert">
+            <h6 class="m-0">
+                You didn't verify your email address and you won't be able to
+                receive any email notification from us.
+                <br />
+                Please click on the link sent to your email or
+                <Link
+                    class="btn btn-primary btn-sm"
+                    href="/email/verification-notification"
+                    as="button"
+                    method="post"
+                >
                     Resend verification email
-                </button>
-            </form>
-        </h6>
-    </div>
-    <div class="alert alert-info" role="alert" v-if="true">
-        Email verification has been sent to your email.
-    </div>
+                </Link>
+            </h6>
+        </div>
+        <div
+            class="alert alert-info"
+            role="alert"
+            v-if="$page.props.flash.status === 'verification-link-sent'"
+        >
+            Email verification has been sent to your email.
+        </div>
+    </template>
 </template>
