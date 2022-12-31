@@ -15,11 +15,14 @@ class UserService
         // Hash password
         $data['password'] = bcrypt($data['password']);
 
+        // Associate to role
+        $data['role_id'] = $data['role'];
+
         // Store user
         $user = User::create($data);
 
-        // Associate to role
-        $user->role()->associate($data['role']);
+        // Store image
+        $user->addMediaFromRequest('image')->toMediaCollection('images');
 
         // Fire event for user creation here when you need to.
         event(new Registered($user));

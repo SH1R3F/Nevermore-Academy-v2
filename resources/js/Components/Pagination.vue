@@ -8,6 +8,7 @@ defineProps({
     <div>
         <component
             v-for="link in links"
+            :key="link.label"
             :href="link.url"
             :is="link.url ? 'Link' : 'span'"
             v-html="link.label"

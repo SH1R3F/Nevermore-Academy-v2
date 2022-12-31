@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Policies\UserPolicy;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 
@@ -28,11 +27,24 @@ class UserController extends Controller
      */
     public function index()
     {
+        $auth = request()->user();
+
         $users = User::with('role')
             ->orderBy('id')
-            ->paginate(10);
+            ->paginate(10, ['id', 'name', 'email', 'role_id']);
 
-        return view('users.index', compact('users'));
+
+        return inertia('Users/Index', [
+            'users' => $users->through(function ($user) use ($auth) {
+                $user->avatar = $user->getFirstMediaUrl('images');
+                $user->editable = $auth->can('update', $user);
+                $user->deleteable = $auth->can('delete', $user);
+                return $user;
+            }),
+            'can' => [
+                'create_user' => $auth->can('create', User::class)
+            ]
+        ]);
     }
 
     /**
@@ -43,7 +55,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::orderBy('id')->get(['id', 'name']);
-        return view('users.create', compact('roles'));
+        return inertia('Users/Create', compact('roles'));
     }
 
     /**
@@ -78,8 +90,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $user->avatar = $user->getFirstMediaUrl('images');
         $roles = Role::orderBy('id')->get(['id', 'name']);
-        return view('users.edit', compact('user', 'roles'));
+        return inertia('Users/Edit', [
+            'user' => $user->load('role'),
+            'roles' => $roles
+        ]);
     }
 
 
