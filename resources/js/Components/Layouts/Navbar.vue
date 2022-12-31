@@ -164,4 +164,14 @@
             Email verification has been sent to your email.
         </div>
     </template>
+    <div
+        class="alert alert-success"
+        role="alert"
+        v-if="
+            $page.props.flash.status &&
+            $page.props.flash.status !== 'verification-link-sent'
+        "
+    >
+        {{ $page.props.flash.status }}
+    </div>
 </template>

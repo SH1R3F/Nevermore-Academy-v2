@@ -34,16 +34,9 @@ class PushNotificationRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        /**
-         *  Because it comes from frontend like this
-         * "recipients" => array:2 [▼
-         *      "superadmin" => "on"
-         *      "teacher" => "on"
-         *  ]
-         */
         $this->merge([
-            'recipients' => $this->recipients ? array_keys($this->recipients) : [],
-            'via' => $this->via ? array_keys($this->via) : [],
+            'recipients' => $this->recipients ? array_keys(array_filter($this->recipients)) : [],
+            'via' => $this->via ? array_keys(array_filter($this->via)) : [],
         ]);
     }
 }

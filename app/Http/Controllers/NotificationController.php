@@ -10,7 +10,7 @@ class NotificationController extends Controller
 {
     public function create()
     {
-        return view('notifications.create');
+        return inertia('Notifications/Create');
     }
 
     public function store(PushNotificationRequest $request, PushNotificationToUsers $action)
