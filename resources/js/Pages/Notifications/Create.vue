@@ -23,7 +23,7 @@ const form = useForm({
                 <div class="card">
                     <form
                         @submit.prevent="
-                            form.post('/push-notifications/create')
+                            form.post(route('notifications.store'))
                         "
                     >
                         <div class="card-header pb-0">

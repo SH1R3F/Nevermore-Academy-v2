@@ -19,7 +19,9 @@ defineProps({
                             <h6>Roles of the site</h6>
                         </div>
                         <div class="px-4 pt-3" v-if="can.create_role">
-                            <Link href="/roles/create" class="btn btn-primary"
+                            <Link
+                                :href="route('roles.create')"
+                                class="btn btn-primary"
                                 >Create new role</Link
                             >
                         </div>
@@ -57,7 +59,9 @@ defineProps({
                                         <td class="align-middle">
                                             <Link
                                                 v-if="role.editable"
-                                                :href="`/roles/${role.id}/edit`"
+                                                :href="
+                                                    route('roles.edit', role.id)
+                                                "
                                                 class="btn btn-secondary font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Edit role"
@@ -69,7 +73,12 @@ defineProps({
                                                 v-if="role.deleteable"
                                                 as="button"
                                                 method="delete"
-                                                :href="`/roles/${role.id}`"
+                                                :href="
+                                                    route(
+                                                        'roles.destroy',
+                                                        role.id
+                                                    )
+                                                "
                                                 class="btn btn-danger font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Delete role"

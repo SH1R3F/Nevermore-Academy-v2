@@ -1,3 +1,11 @@
+<script setup>
+const localize = () => {
+    const params = route().params;
+    params.locale = params.locale === "ar" ? "en" : "ar";
+    window.location = route(route().current(), params);
+};
+</script>
+
 <template>
     <!-- Navbar -->
     <nav
@@ -56,7 +64,7 @@
                             </li>
                             <li>
                                 <Link
-                                    href="/logout"
+                                    :href="route('logout')"
                                     method="post"
                                     as="button"
                                     class="text-sm font-weight-normal mb-1 bg-transparent w-100 text-center py-1 border-0"
@@ -96,7 +104,12 @@
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
                                             <Link
-                                                :href="`notifications/${notification.id}`"
+                                                :href="
+                                                    route(
+                                                        'notifications.read',
+                                                        notification.id
+                                                    )
+                                                "
                                                 method="post"
                                                 as="button"
                                                 class="me-3 btn btn-default"
@@ -136,6 +149,23 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- Site language -->
+                    <li
+                        class="nav-item dropdown pe-2 d-flex align-items-center mx-2"
+                    >
+                        <a
+                            href="#"
+                            class="nav-link text-white p-0"
+                            @click.prevent="localize()"
+                        >
+                            <i class="fa fa-flag me-sm-1"></i>
+                            <span class="d-sm-inline d-none">{{
+                                route().params.locale === "ar"
+                                    ? "English"
+                                    : "العربية"
+                            }}</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -149,7 +179,7 @@
                 Please click on the link sent to your email or
                 <Link
                     class="btn btn-primary btn-sm"
-                    href="/email/verification-notification"
+                    :href="route('verification.send')"
                     as="button"
                     method="post"
                 >

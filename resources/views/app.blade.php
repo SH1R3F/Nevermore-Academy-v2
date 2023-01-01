@@ -13,7 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8" />
@@ -31,6 +31,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css') }}?v=2.0.4" rel="stylesheet" />
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
+    @routes
     <script src="{{ mix('/js/app.js') }}" defer></script>
     @inertiaHead
 </head>

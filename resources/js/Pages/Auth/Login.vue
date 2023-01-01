@@ -29,7 +29,9 @@ export default { layout: Guest };
                                 </p>
                             </div>
                             <div class="card-body">
-                                <form @submit.prevent="form.post('/login')">
+                                <form
+                                    @submit.prevent="form.post(route('login'))"
+                                >
                                     <div class="mb-3">
                                         <input
                                             name="email"
@@ -86,7 +88,7 @@ export default { layout: Guest };
                                 <p class="mb-4 text-sm mx-auto">
                                     Don't have an account?
                                     <Link
-                                        href="/register"
+                                        :href="route('register')"
                                         class="text-primary text-gradient font-weight-bold"
                                         >Sign up</Link
                                     >

@@ -19,7 +19,9 @@ defineProps({
                             <h6>Users of the site</h6>
                         </div>
                         <div class="px-4 pt-3" v-if="can.create_user">
-                            <Link href="/users/create" class="btn btn-primary"
+                            <Link
+                                :href="route('users.create')"
+                                class="btn btn-primary"
                                 >Create new user</Link
                             >
                         </div>
@@ -81,7 +83,9 @@ defineProps({
                                         <td class="align-middle">
                                             <Link
                                                 v-if="user.editable"
-                                                :href="`/users/${user.id}/edit`"
+                                                :href="
+                                                    route('users.edit', user.id)
+                                                "
                                                 class="btn btn-secondary font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Edit user"
@@ -90,7 +94,12 @@ defineProps({
                                             </Link>
                                             <Link
                                                 v-if="user.deleteable"
-                                                :href="`/users/${user.id}`"
+                                                :href="
+                                                    route(
+                                                        'users.destroy',
+                                                        user.id
+                                                    )
+                                                "
                                                 method="delete"
                                                 as="button"
                                                 class="btn btn-danger font-weight-bold text-xs mx-1"

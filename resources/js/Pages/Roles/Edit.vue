@@ -16,7 +16,11 @@ const form = useForm({
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <form @submit.prevent="form.put(`/roles/${role.id}`)">
+                    <form
+                        @submit.prevent="
+                            form.put(route('roles.update', role.id))
+                        "
+                    >
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
                                 <p class="mb-0">

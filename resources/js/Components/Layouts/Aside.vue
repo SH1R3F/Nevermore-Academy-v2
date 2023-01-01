@@ -11,7 +11,7 @@
                 aria-hidden="true"
                 id="iconSidenav"
             ></i>
-            <Link class="navbar-brand m-0" href="/">
+            <Link class="navbar-brand m-0" :href="route('dashboard')">
                 <img
                     :src="
                         $page.props.authUser.avatar || '/assets/img/logo.webp'
@@ -34,7 +34,7 @@
                     <Link
                         class="nav-link"
                         :class="{ active: $page.component === 'Dashboard' }"
-                        href="/"
+                        :href="route('dashboard')"
                     >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
@@ -56,7 +56,7 @@
                         :class="{
                             active: $page.url.startsWith('/push-notifications'),
                         }"
-                        href="/push-notifications/create"
+                        :href="route('notifications.create')"
                     >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
@@ -80,7 +80,7 @@
                         :class="{
                             active: $page.url.startsWith('/roles'),
                         }"
-                        href="/roles"
+                        :href="route('roles.index')"
                     >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
@@ -101,7 +101,7 @@
                         :class="{
                             active: $page.url.startsWith('/users'),
                         }"
-                        href="/users"
+                        :href="route('users.index')"
                     >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
@@ -122,7 +122,7 @@
                         :class="{
                             active: $page.url.startsWith('/assignments'),
                         }"
-                        href="/assignments"
+                        :href="route('assignments.index')"
                     >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
@@ -143,7 +143,7 @@
                         :class="{
                             active: $page.url.startsWith('/submissions'),
                         }"
-                        href="/submissions"
+                        :href="route('submissions.index')"
                     >
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"

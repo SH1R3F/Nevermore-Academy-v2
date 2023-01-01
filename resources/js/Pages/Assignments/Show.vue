@@ -17,7 +17,7 @@ defineProps({
                         </p>
                         <Link
                             v-if="can.update_assignment"
-                            :href="`/assignments/${assignment.id}/edit`"
+                            :href="route('assignments.edit', assignment.id)"
                             class="btn btn-primary btn-sm ms-auto"
                             >Edit</Link
                         >
@@ -61,7 +61,12 @@ defineProps({
                                         >Degree: {{ submission.degree }}</span
                                     >
                                     <Link
-                                        :href="`/submissions/${submission.id}`"
+                                        :href="
+                                            route(
+                                                'submissions.edit',
+                                                submission.id
+                                            )
+                                        "
                                         class="btn btn-default btn-sm"
                                         >Show submission</Link
                                     >
@@ -69,7 +74,12 @@ defineProps({
                                 <div v-else>
                                     <Link
                                         v-if="submission.editable"
-                                        :href="`/submissions/${submission.id}`"
+                                        :href="
+                                            route(
+                                                'submissions.edit',
+                                                submission.id
+                                            )
+                                        "
                                         class="btn btn-primary btn-sm ms-auto"
                                         >Give degree</Link
                                     >

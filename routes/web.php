@@ -20,53 +20,62 @@ use App\Http\Controllers\SubmissionController;
 |
 */
 
-/* Mobile verification routes */
-//
-Route::middleware('auth')->group(function () {
-    // Mobile verification
-    Route::get('verify-mobile', [MobileVerificationController::class, 'showVerifyForm'])->name('verify-mobile.notice');
-    Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');
-    Route::get('verify-mobile/resend', [MobileVerificationController::class, 'resend'])->name('verify-mobile.resend')->middleware('throttle:6,1');
+Route::redirect('/', app()->getLocale());
 
-    // 2 Factor Authentication
-    Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'showChooseForm'])->name('2fa.choose');
-    Route::post('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'send'])->name('2fa.send');
-    Route::get('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'showVerifyForm'])->name('2fa.notice');
-    Route::post('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.verify');
-    Route::get('/two-factor-authentication/resend', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
-});
+Route::group([
+    'prefix' => '{locale?}',
+    'where' => ['locale', 'ar|en'],
+    'middleware' => ['setlocale']
+], function () {
 
+    /* Mobile verification routes */
+    //
+    Route::middleware('auth')->group(function () {
+        // Mobile verification
+        Route::get('verify-mobile', [MobileVerificationController::class, 'showVerifyForm'])->name('verify-mobile.notice');
+        Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');
+        Route::get('verify-mobile/resend', [MobileVerificationController::class, 'resend'])->name('verify-mobile.resend')->middleware('throttle:6,1');
 
-Route::middleware(['auth', 'mobile-verified', '2fa'])->group(function () {
-    /* Dashboard */
-    Route::inertia('/', 'Dashboard')->name('dashboard');
-
-    /* Mark notification read */
-    Route::post('notifications/{id}', function ($id) {
-        Auth::user()->notifications()->find($id)->markAsRead();
-        return redirect()->back();
-    })->name('notifications.read');
-
-    /* Notifications management */
-    Route::middleware('role:superadmin')->group(function () {
-        Route::get('/push-notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
-        Route::post('/push-notifications/create', [NotificationController::class, 'store'])->name('notifications.store');
+        // 2 Factor Authentication
+        Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'showChooseForm'])->name('2fa.choose');
+        Route::post('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'send'])->name('2fa.send');
+        Route::get('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'showVerifyForm'])->name('2fa.notice');
+        Route::post('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.verify');
+        Route::get('/two-factor-authentication/resend', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
     });
 
-    /* Roles management */
-    Route::resource('roles', RoleController::class);
 
-    /* Users management */
-    Route::resource('users', UserController::class);
+    Route::middleware(['auth', 'mobile-verified', '2fa'])->group(function () {
+        /* Dashboard */
+        Route::inertia('/', 'Dashboard')->name('dashboard');
 
-    /* Assignments management */
-    Route::resource('assignments', AssignmentController::class);
+        /* Mark notification read */
+        Route::post('notifications/{id}', function ($id) {
+            Auth::user()->notifications()->find($id)->markAsRead();
+            return redirect()->back();
+        })->name('notifications.read');
 
-    /* Students submissions to assignment */
-    Route::get('submissions', [SubmissionController::class, 'index'])->name('submissions.index'); // List my submissions
-    Route::get('submissions/{submission}', [SubmissionController::class, 'edit'])->name('submissions.edit'); // Give degree by teacher
-    Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update'); // Give degree by teacher
-    Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create'); // Submit submission
-    Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store'); // Submit submission
-    Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
+        /* Notifications management */
+        Route::middleware('role:superadmin')->group(function () {
+            Route::get('/push-notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+            Route::post('/push-notifications/create', [NotificationController::class, 'store'])->name('notifications.store');
+        });
+
+        /* Roles management */
+        Route::resource('roles', RoleController::class);
+
+        /* Users management */
+        Route::resource('users', UserController::class);
+
+        /* Assignments management */
+        Route::resource('assignments', AssignmentController::class);
+
+        /* Students submissions to assignment */
+        Route::get('submissions', [SubmissionController::class, 'index'])->name('submissions.index'); // List my submissions
+        Route::get('submissions/{submission}', [SubmissionController::class, 'edit'])->name('submissions.edit'); // Give degree by teacher
+        Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update'); // Give degree by teacher
+        Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create'); // Submit submission
+        Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store'); // Submit submission
+        Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
+    });
 });

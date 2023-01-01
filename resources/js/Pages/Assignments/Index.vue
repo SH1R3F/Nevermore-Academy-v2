@@ -18,7 +18,7 @@ defineProps({
                         </div>
                         <div class="px-4 pt-3">
                             <Link
-                                href="/assignments/create"
+                                :href="route('assignments.create')"
                                 class="btn btn-primary"
                                 >Create new assignment</Link
                             >
@@ -73,7 +73,12 @@ defineProps({
                                         <td class="align-middle">
                                             <Link
                                                 v-if="assignment.submitable"
-                                                :href="`/assignment/${assignment.id}/submit`"
+                                                :href="
+                                                    route(
+                                                        'submissions.create',
+                                                        assignment.id
+                                                    )
+                                                "
                                                 class="btn btn-primary font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Submit assignment"
@@ -82,7 +87,12 @@ defineProps({
                                             </Link>
                                             <Link
                                                 v-if="assignment.viewable"
-                                                :href="`/assignments/${assignment.id}`"
+                                                :href="
+                                                    route(
+                                                        'assignments.show',
+                                                        assignment.id
+                                                    )
+                                                "
                                                 class="btn btn-primary font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Show assignment"
@@ -91,7 +101,12 @@ defineProps({
                                             </Link>
                                             <Link
                                                 v-if="assignment.editable"
-                                                :href="`/assignments/${assignment.id}/edit`"
+                                                :href="
+                                                    route(
+                                                        'assignments.edit',
+                                                        assignment.id
+                                                    )
+                                                "
                                                 class="btn btn-secondary font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Edit assignment"
@@ -100,7 +115,12 @@ defineProps({
                                             </Link>
                                             <Link
                                                 v-if="assignment.deleteable"
-                                                :href="`/assignments/${assignment.id}`"
+                                                :href="
+                                                    route(
+                                                        'assignments.destroy',
+                                                        assignment.id
+                                                    )
+                                                "
                                                 method="delete"
                                                 as="button"
                                                 class="btn btn-danger font-weight-bold text-xs mx-1"

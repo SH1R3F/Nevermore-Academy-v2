@@ -20,7 +20,7 @@ const form = useForm({
                 <div class="card">
                     <form
                         @submit.prevent="
-                            form.put(`/assignments/{assignment.id}`)
+                            form.put(route('assignments.update', assignment.id))
                         "
                     >
                         <div class="card-header pb-0">

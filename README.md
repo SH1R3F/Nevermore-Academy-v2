@@ -45,4 +45,10 @@ When user is edited / deleted media is automatically deleted / updated\
 What i wanna do is: if user login with a verified email or a verified mobile he will be automatically asked for a 2fa code sent upon his choice either via email or via mobile. otherwise (if user didn't verify any he will be logged in normally.) [DONE]\
 When user log in (If he has one option verified email|mobile) He will be automatically asked to verify 2FA to be able to use our service.\
 2FA verification method is optional. user can choose between mobile and email.\
-Superadmin can push a notification message for the type of users he can choose (all superadmins, all teachers, or all students) as well as choosing which type of notifications (sms, email, in-app notifications, or all).
+Superadmin can push a notification message for the type of users he can choose (all superadmins, all teachers, or all students) as well as choosing which type of notifications (sms, email, in-app notifications, or all)./
+
+Adding localization through url is a little bit tricky.\
+Problems I'm facing:\
+
+-   All routes where hardcoded in views `/register`, `/login`. So when I needed to append a locale prefix to them it's gonna be unpractical to append to them one by one. Fortunately Ziggy is here with the solution.
+-   Controllers that requires a parameter from the route expects the order of passed parameters to have the locale at first. Causes a problem with all other paramters. I Walked around it by a little trick to forget the locale param after using it in middleware `$request->route()->forgetParameter('locale');`

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'mobile-verified' => \App\Http\Middleware\EnsureMobileIsVerified::class,
         '2fa' => \App\Http\Middleware\TwoFactorAuthentication::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'setlocale' => \App\Http\Middleware\SetLocale::class,
     ];
 }

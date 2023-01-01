@@ -72,7 +72,12 @@ defineProps({
                                         <td class="align-middle">
                                             <Link
                                                 v-if="submission.viewable"
-                                                :href="`/assignment/${submission.assignment.id}/submission`"
+                                                :href="
+                                                    route(
+                                                        'submissions.show',
+                                                        submission.assignment.id
+                                                    )
+                                                "
                                                 class="btn btn-primary font-weight-bold text-xs mx-1"
                                                 data-toggle="tooltip"
                                                 data-original-title="Show assignment"

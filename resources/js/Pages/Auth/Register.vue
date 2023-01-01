@@ -42,7 +42,7 @@ export default { layout: Guest };
             <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
                 <div class="card z-index-0">
                     <div class="card-body">
-                        <form @submit.prevent="form.post('/register')">
+                        <form @submit.prevent="form.post(route('register'))">
                             <div class="mb-3">
                                 <input
                                     name="name"
@@ -147,7 +147,7 @@ export default { layout: Guest };
                             <p class="text-sm mt-3 mb-0">
                                 Already have an account?
                                 <Link
-                                    href="/login"
+                                    :href="route('login')"
                                     class="text-dark font-weight-bolder"
                                     >Sign in</Link
                                 >

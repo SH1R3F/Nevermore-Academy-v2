@@ -14,7 +14,9 @@ const form = useForm({
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <form @submit.prevent="form.post('/assignments')">
+                    <form
+                        @submit.prevent="form.post(route('assignments.store'))"
+                    >
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
                                 <p class="mb-0">Create a new assignment</p>

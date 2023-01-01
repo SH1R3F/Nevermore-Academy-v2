@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -28,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Guard $auth)
     {
+
+        URL::defaults(['locale' => app()->getLocale()]);
+
         Schema::defaultStringLength(191);
 
         // User bootstrap pagination

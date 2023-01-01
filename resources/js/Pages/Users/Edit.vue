@@ -24,7 +24,11 @@ const form = useForm({
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <form @submit.prevent="form.post(`/users/${user.id}`)">
+                    <form
+                        @submit.prevent="
+                            form.post(route('users.update', user.id))
+                        "
+                    >
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
                                 <p class="mb-0">
