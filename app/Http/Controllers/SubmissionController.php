@@ -33,12 +33,28 @@ class SubmissionController extends Controller
      */
     public function index()
     {
+        $user = request()->user();
+
         $submissions = Submission::with('assignment', 'assignment.teacher')
             ->where('student_id', Auth::user()->id)
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
-        return view('submissions.index', compact('submissions'));
+        return inertia('Submissions/Index', [
+            'submissions' => $submissions->through(function ($submission) use ($user) {
+                $submission->viewable = $user->can('view', [Submission::class, $submission->assignment]);
+                $submission->assignment = [
+                    'id' => $submission->assignment->id,
+                    'title' => $submission->assignment->title,
+                    'deadline' => $submission->assignment->deadline,
+                    'teacher' => [
+                        'id' => $submission->assignment->teacher->id,
+                        'name' => $submission->assignment->teacher->name,
+                    ],
+                ];
+                return $submission;
+            }),
+        ]);
     }
 
     /**
@@ -55,7 +71,7 @@ class SubmissionController extends Controller
         // Student can only submit assignment once.
         if ($this->userSubmittedBefore($assignment)) return redirect()->route('submissions.show', $assignment->id)->with('status', 'You already submitted once');
 
-        return view('submissions.create', compact('assignment'));
+        return inertia('Submissions/Create', compact('assignment'));
     }
 
     /**
@@ -91,7 +107,7 @@ class SubmissionController extends Controller
 
         $submission = $assignment->submissions()->where('student_id', Auth::user()->id)->first();
 
-        return view('submissions.show', compact('assignment', 'submission'));
+        return inertia('Submissions/Show', compact('assignment', 'submission'));
     }
 
     /**
@@ -102,7 +118,7 @@ class SubmissionController extends Controller
      */
     public function edit(Submission $submission)
     {
-        return view('submissions.give-degree', compact('submission'));
+        return inertia('Submissions/GiveDegree', compact('submission'));
     }
 
     /**

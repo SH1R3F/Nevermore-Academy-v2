@@ -86,20 +86,26 @@ class AssignmentController extends Controller
     {
         $user = request()->user();
         $assignment = $assignment->load('submissions', 'submissions.student')->loadCount('submissions');
-        $assignment->submissions->map(function ($submission) use ($user) {
-            return [
-                'id' => $submission->id,
-                'degree' => $submission->degree,
-                'student' => [
-                    'id' => $submission->student->id,
-                    'name' => $submission->student->name,
-                ],
-                'editable' => $user->can('update', $submission)
-            ];
-        });
 
         return inertia('Assignments/Show', [
-            'assignment' => $assignment,
+            'assignment' => [
+                'id' => $assignment->id,
+                'title' => $assignment->title,
+                'requirement' => $assignment->requirement,
+                'deadline' => $assignment->deadline,
+                'submissions_count' => $assignment->submissions_count,
+                'submissions' => $assignment->submissions->map(function ($submission) use ($user) {
+                    return [
+                        'id' => $submission->id,
+                        'degree' => $submission->degree,
+                        'student' => [
+                            'id' => $submission->student->id,
+                            'name' => $submission->student->name,
+                        ],
+                        'editable' => $user->can('update', $submission)
+                    ];
+                })
+            ],
             'can' => [
                 'update_assignment' => $user->can('update', $assignment)
             ]

@@ -61,7 +61,7 @@ defineProps({
                                         >Degree: {{ submission.degree }}</span
                                     >
                                     <Link
-                                        :href="`submissions/${submission.id}`"
+                                        :href="`/submissions/${submission.id}`"
                                         class="btn btn-default btn-sm"
                                         >Show submission</Link
                                     >
@@ -69,7 +69,7 @@ defineProps({
                                 <div v-else>
                                     <Link
                                         v-if="submission.editable"
-                                        :href="`submissions/${submission.id}`"
+                                        :href="`/submissions/${submission.id}`"
                                         class="btn btn-primary btn-sm ms-auto"
                                         >Give degree</Link
                                     >
