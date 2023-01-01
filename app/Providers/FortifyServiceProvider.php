@@ -52,7 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
             return inertia('Auth/Login');
         });
         Fortify::registerView(function () {
-            return view('auth.register');
+            return inertia('Auth/Register');
         });
 
         // Appending to the default fortify authentication process so we can generate 2fa codes

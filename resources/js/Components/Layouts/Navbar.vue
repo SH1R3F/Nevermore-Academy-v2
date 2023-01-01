@@ -55,14 +55,15 @@
                                 </span>
                             </li>
                             <li>
-                                <form method="POST" action="#" id="logoutForm">
-                                    <button
-                                        class="text-sm font-weight-normal mb-1 bg-transparent w-100 text-center py-1 border-0"
-                                        type="submit"
-                                    >
-                                        Logout
-                                    </button>
-                                </form>
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    class="text-sm font-weight-normal mb-1 bg-transparent w-100 text-center py-1 border-0"
+                                    type="submit"
+                                >
+                                    Logout
+                                </Link>
                             </li>
                         </ul>
                     </li>

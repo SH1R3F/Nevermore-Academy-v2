@@ -17,6 +17,8 @@
 [x] Email verification\
 [x] Two factor authentication (without a package & without using the default fortify 2fa feature)\
 [x] Push notification to chosen types (mail, db, and sms)\
+[] Localization on both the backend and frontend statically and dynamically through a URL segment
+[] Provide API on a subdomain
 
 ---
 

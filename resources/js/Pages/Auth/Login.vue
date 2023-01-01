@@ -85,10 +85,10 @@ export default { layout: Guest };
                             >
                                 <p class="mb-4 text-sm mx-auto">
                                     Don't have an account?
-                                    <a
-                                        href="#"
+                                    <Link
+                                        href="/register"
                                         class="text-primary text-gradient font-weight-bold"
-                                        >Sign up</a
+                                        >Sign up</Link
                                     >
                                 </p>
                             </div>
