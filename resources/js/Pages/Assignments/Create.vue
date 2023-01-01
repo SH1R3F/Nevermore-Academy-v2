@@ -2,8 +2,10 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
-    title: "",
-    requirement: "",
+    title_ar: "",
+    title_en: "",
+    requirement_ar: "",
+    requirement_en: "",
     deadline: "",
 });
 </script>
@@ -41,18 +43,42 @@ const form = useForm({
                                         <label
                                             for="title"
                                             class="form-control-label"
-                                            >{{ __("Title") }}</label
+                                            >{{ __("Title") }} ({{
+                                                __("In Arabic")
+                                            }})</label
                                         >
                                         <input
                                             class="form-control"
                                             id="title"
                                             type="text"
-                                            v-model="form.title"
+                                            v-model="form.title_ar"
                                         />
                                         <span
                                             class="text-danger text-sm"
-                                            v-if="form.errors.title"
-                                            >{{ form.errors.title }}</span
+                                            v-if="form.errors.title_ar"
+                                            >{{ form.errors.title_ar }}</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label
+                                            for="title"
+                                            class="form-control-label"
+                                            >{{ __("Title") }} ({{
+                                                __("In English")
+                                            }})</label
+                                        >
+                                        <input
+                                            class="form-control"
+                                            id="title"
+                                            type="text"
+                                            v-model="form.title_en"
+                                        />
+                                        <span
+                                            class="text-danger text-sm"
+                                            v-if="form.errors.title_en"
+                                            >{{ form.errors.title_en }}</span
                                         >
                                     </div>
                                 </div>
@@ -61,18 +87,46 @@ const form = useForm({
                                         <label
                                             for="requirement"
                                             class="form-control-label"
-                                            >{{ __("Requirement") }}</label
+                                            >{{ __("Requirement") }} ({{
+                                                __("In Arabic")
+                                            }})</label
                                         >
                                         <textarea
                                             class="form-control"
                                             id="requirement"
                                             type="text"
-                                            v-model="form.requirement"
+                                            v-model="form.requirement_ar"
                                         ></textarea>
                                         <span
                                             class="text-danger text-sm"
-                                            v-if="form.errors.requirement"
-                                            >{{ form.errors.requirement }}</span
+                                            v-if="form.errors.requirement_ar"
+                                            >{{
+                                                form.errors.requirement_ar
+                                            }}</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label
+                                            for="requirement"
+                                            class="form-control-label"
+                                            >{{ __("Requirement") }} ({{
+                                                __("In English")
+                                            }})</label
+                                        >
+                                        <textarea
+                                            class="form-control"
+                                            id="requirement"
+                                            type="text"
+                                            v-model="form.requirement_en"
+                                        ></textarea>
+                                        <span
+                                            class="text-danger text-sm"
+                                            v-if="form.errors.requirement_en"
+                                            >{{
+                                                form.errors.requirement_en
+                                            }}</span
                                         >
                                     </div>
                                 </div>

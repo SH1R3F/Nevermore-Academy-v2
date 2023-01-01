@@ -24,8 +24,10 @@ class AssignmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'requirement' => ['nullable', 'string'],
+            'title_ar' => ['required', 'string', 'max:255'],
+            'title_en' => ['nullable', 'string', 'max:255'],
+            'requirement_ar' => ['nullable', 'string'],
+            'requirement_en' => ['nullable', 'string'],
             'deadline' => ['required', 'date', 'after_or_equal:today']
         ];
     }

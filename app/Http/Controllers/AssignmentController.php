@@ -7,6 +7,7 @@ use App\Models\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AssignmentRequest;
+use App\Services\AssignmentService;
 
 class AssignmentController extends Controller
 {
@@ -35,18 +36,23 @@ class AssignmentController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
+        // Definitely needs refactoring.
         return inertia('Assignments/Index', [
             'assignments' => $assignments->through(function ($assignment) use ($user) {
-                $assignment->teacher = [
-                    'id' => $assignment->teacher->id,
-                    'name' => $assignment->teacher->name,
+                return [
+                    'teacher' => [
+                        'id' => $assignment->teacher->id,
+                        'name' => $assignment->teacher->name,
+                    ],
+                    'viewable' => $user->can('view', $assignment),
+                    'editable' => $user->can('update', $assignment),
+                    'deleteable' => $user->can('delete', $assignment),
+                    'submitable' => $user->can('create', [Submission::class, $assignment]),
+                    'title' => $assignment->title,
+                    'requirement' => $assignment->requirement,
+                    'deadline' => $assignment->deadline,
+                    'id' => $assignment->id
                 ];
-                $assignment->viewable = $user->can('view', $assignment);
-                $assignment->editable = $user->can('update', $assignment);
-                $assignment->deleteable = $user->can('delete', $assignment);
-                $assignment->submitable = $user->can('create', [Submission::class, $assignment]);
-
-                return $assignment;
             }),
             'can' => [
                 'create_assignment' => $user->can('create', Assignment::class)
@@ -70,9 +76,9 @@ class AssignmentController extends Controller
      * @param  \App\Http\Requests\AssignmentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AssignmentRequest $request)
+    public function store(AssignmentRequest $request, AssignmentService $service)
     {
-        Auth::user()->assignments()->create($request->validated());
+        $service->store($request->validated());
         return redirect()->route('assignments.index')->with('status', 'Assignment created successfully');
     }
 
@@ -132,9 +138,9 @@ class AssignmentController extends Controller
      * @param  \App\Models\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function update(AssignmentRequest $request, Assignment $assignment)
+    public function update(AssignmentRequest $request, Assignment $assignment, AssignmentService $service)
     {
-        $assignment->update($request->validated());
+        $service->update($request->validated(), $assignment);
         return redirect()->back()->with('status', 'Assignment updated successfully');
     }
 

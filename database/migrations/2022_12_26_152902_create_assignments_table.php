@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('requirement')->nullable();
+            $table->json('title');
+            $table->json('requirement')->nullable();
             $table->date('deadline');
             $table->unsignedBigInteger('teacher_id');
             $table->timestamps();

@@ -17,7 +17,7 @@
 [x] Email verification\
 [x] Two factor authentication (without a package & without using the default fortify 2fa feature)\
 [x] Push notification to chosen types (mail, db, and sms)\
-[] Localization on both the backend and frontend statically and dynamically through a URL segment
+[x] Localization on both the backend and frontend statically and dynamically through a URL segment
 [] Provide API on a subdomain
 
 ---
@@ -53,3 +53,5 @@ Problems I'm facing:\
 -   All routes where hardcoded in views `/register`, `/login`. So when I needed to append a locale prefix to them it's gonna be unpractical to append to them one by one. Fortunately Ziggy is here with the solution.
 -   Controllers that requires a parameter from the route expects the order of passed parameters to have the locale at first. Causes a problem with all other paramters. I Walked around it by a little trick to forget the locale param after using it in middleware `$request->route()->forgetParameter('locale');`
 -   Fortify codes are hidden with now way to update the logout redirection which leads to '/' without specifying locale. thus we would be redirected to other locales we don't want. Solved by creating another response and bind it instead of fortify logout response.
+-   Localizing records returned from database. Google says there're two ways to do this. an old insuffecient way (Saving translations in same table as different columns for each language you wanna add). and another better way by saving it in different tables for translation (Or maybe in same table with a different way of saving).
+    I'll be using the second way with an approach of saving it in same table but as json data by Spatie/Translatable package.
