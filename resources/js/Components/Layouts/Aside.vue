@@ -54,7 +54,7 @@
                     <Link
                         class="nav-link"
                         :class="{
-                            active: $page.url.startsWith('push-notifications'),
+                            active: $page.url.startsWith('/push-notifications'),
                         }"
                         href="/push-notifications/create"
                     >
@@ -78,7 +78,7 @@
                     <Link
                         class="nav-link"
                         :class="{
-                            active: $page.url.startsWith('roles'),
+                            active: $page.url.startsWith('/roles'),
                         }"
                         href="/roles"
                     >
@@ -99,7 +99,7 @@
                     <Link
                         class="nav-link"
                         :class="{
-                            active: $page.url.startsWith('users'),
+                            active: $page.url.startsWith('/users'),
                         }"
                         href="/users"
                     >
@@ -120,7 +120,7 @@
                     <Link
                         class="nav-link"
                         :class="{
-                            active: $page.url.startsWith('assignments'),
+                            active: $page.url.startsWith('/assignments'),
                         }"
                         href="/assignments"
                     >
@@ -141,7 +141,7 @@
                     <Link
                         class="nav-link"
                         :class="{
-                            active: $page.url.startsWith('submissions'),
+                            active: $page.url.startsWith('/submissions'),
                         }"
                         href="/submissions"
                     >

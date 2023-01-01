@@ -16,7 +16,7 @@ class Assignment extends Model
     protected $fillable = ['title', 'requirement', 'teacher_id', 'deadline'];
 
     protected $casts = [
-        'deadline' => 'date'
+        'deadline' => 'date:Y-m-d'
     ];
 
     public function teacher(): BelongsTo

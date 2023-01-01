@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AssignmentRequest;
 use App\Models\Assignment;
+use App\Models\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AssignmentRequest;
 
 class AssignmentController extends Controller
 {
@@ -27,13 +28,30 @@ class AssignmentController extends Controller
      */
     public function index()
     {
+        $user = request()->user();
         $assignments = Assignment::with('teacher')
             // If teacher only show his assignments.
             ->when(Auth::user()->hasRole('teacher'), fn ($query) => $query->where('teacher_id', Auth::user()->id))
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
-        return view('assignments.index', compact('assignments'));
+        return inertia('Assignments/Index', [
+            'assignments' => $assignments->through(function ($assignment) use ($user) {
+                $assignment->teacher = [
+                    'id' => $assignment->teacher->id,
+                    'name' => $assignment->teacher->name,
+                ];
+                $assignment->viewable = $user->can('view', $assignment);
+                $assignment->editable = $user->can('update', $assignment);
+                $assignment->deleteable = $user->can('delete', $assignment);
+                $assignment->submitable = $user->can('create', [Submission::class, $assignment]);
+
+                return $assignment;
+            }),
+            'can' => [
+                'create_assignment' => $user->can('create', Assignment::class)
+            ]
+        ]);
     }
 
     /**
@@ -43,7 +61,7 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        return view('assignments.create');
+        return inertia('Assignments/Create');
     }
 
     /**
@@ -66,8 +84,25 @@ class AssignmentController extends Controller
      */
     public function show(Assignment $assignment)
     {
-        return view('assignments.show', [
-            'assignment' => $assignment->load('submissions', 'submissions.student')->loadCount('submissions')
+        $user = request()->user();
+        $assignment = $assignment->load('submissions', 'submissions.student')->loadCount('submissions');
+        $assignment->submissions->map(function ($submission) use ($user) {
+            return [
+                'id' => $submission->id,
+                'degree' => $submission->degree,
+                'student' => [
+                    'id' => $submission->student->id,
+                    'name' => $submission->student->name,
+                ],
+                'editable' => $user->can('update', $submission)
+            ];
+        });
+
+        return inertia('Assignments/Show', [
+            'assignment' => $assignment,
+            'can' => [
+                'update_assignment' => $user->can('update', $assignment)
+            ]
         ]);
     }
 
@@ -79,7 +114,9 @@ class AssignmentController extends Controller
      */
     public function edit(Assignment $assignment)
     {
-        return view('assignments.edit', compact('assignment'));
+        return inertia('Assignments/Edit', [
+            'assignment' => $assignment
+        ]);
     }
 
     /**

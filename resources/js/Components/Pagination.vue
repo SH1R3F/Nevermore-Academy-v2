@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <div>
+    <div v-if="links.length > 3">
         <component
             v-for="link in links"
             :key="link.label"
