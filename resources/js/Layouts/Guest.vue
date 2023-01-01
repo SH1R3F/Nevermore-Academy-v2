@@ -1,5 +1,5 @@
 <template>
-    <Head title="Nevermore academy" />
+    <Head :title="__('Nevermore academy')" />
     <main class="main-content mt-0">
         <slot />
     </main>

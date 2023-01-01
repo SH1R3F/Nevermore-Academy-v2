@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\Hash;
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Responses\LogoutResponse;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
@@ -43,6 +44,11 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($email . $request->ip());
         });
+
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LogoutResponse::class,
+            LogoutResponse::class
+        );
 
         // RateLimiter::for('two-factor', function (Request $request) {
         //     return Limit::perMinute(5)->by($request->session()->get('login.id'));

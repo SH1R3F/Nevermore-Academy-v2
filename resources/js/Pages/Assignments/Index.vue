@@ -14,13 +14,13 @@ defineProps({
                         class="d-flex justify-content-between align-items-center"
                     >
                         <div class="card-header pb-0">
-                            <h6>Assignments</h6>
+                            <h6>{{ __("Assignments") }}</h6>
                         </div>
                         <div class="px-4 pt-3">
                             <Link
                                 :href="route('assignments.create')"
                                 class="btn btn-primary"
-                                >Create new assignment</Link
+                                >{{ __("Create a new assignment") }}</Link
                             >
                         </div>
                     </div>
@@ -32,22 +32,22 @@ defineProps({
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                                         >
-                                            Assignment title
+                                            {{ __("Title") }}
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                         >
-                                            Requirements
+                                            {{ __("Requirement") }}
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                         >
-                                            Teacher
+                                            {{ __("Teacher") }}
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                         >
-                                            Deadline
+                                            {{ __("Deadline") }}
                                         </th>
                                         <th
                                             class="text-secondary opacity-7"
@@ -83,7 +83,7 @@ defineProps({
                                                 data-toggle="tooltip"
                                                 data-original-title="Submit assignment"
                                             >
-                                                Submit
+                                                {{ __("Submit") }}
                                             </Link>
                                             <Link
                                                 v-if="assignment.viewable"
@@ -97,7 +97,7 @@ defineProps({
                                                 data-toggle="tooltip"
                                                 data-original-title="Show assignment"
                                             >
-                                                Show
+                                                {{ __("Show") }}
                                             </Link>
                                             <Link
                                                 v-if="assignment.editable"
@@ -111,7 +111,7 @@ defineProps({
                                                 data-toggle="tooltip"
                                                 data-original-title="Edit assignment"
                                             >
-                                                Edit
+                                                {{ __("Edit") }}
                                             </Link>
                                             <Link
                                                 v-if="assignment.deleteable"
@@ -127,13 +127,13 @@ defineProps({
                                                 data-toggle="tooltip"
                                                 data-original-title="Delete assignment"
                                             >
-                                                Delete
+                                                {{ __("Delete") }}
                                             </Link>
                                         </td>
                                     </tr>
                                     <tr v-if="!assignments.data.length">
                                         <td colspan="3" class="text-center">
-                                            No assignments found
+                                            {{ __("No assignments found") }}
                                         </td>
                                     </tr>
                                 </tbody>

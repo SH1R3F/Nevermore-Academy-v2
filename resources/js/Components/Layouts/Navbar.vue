@@ -59,7 +59,8 @@ const localize = () => {
                                 <span
                                     class="text-sm font-weight-normal mb-1 d-block text-center text-muted"
                                 >
-                                    Role: {{ $page.props.authUser.role }}
+                                    {{ __("Role") }}:
+                                    {{ $page.props.authUser.role }}
                                 </span>
                             </li>
                             <li>
@@ -70,7 +71,7 @@ const localize = () => {
                                     class="text-sm font-weight-normal mb-1 bg-transparent w-100 text-center py-1 border-0"
                                     type="submit"
                                 >
-                                    Logout
+                                    {{ __("Logout") }}
                                 </Link>
                             </li>
                         </ul>
@@ -173,17 +174,21 @@ const localize = () => {
     <template v-if="!$page.props.authUser.verified">
         <div class="alert alert-info" role="alert">
             <h6 class="m-0">
-                You didn't verify your email address and you won't be able to
-                receive any email notification from us.
+                {{
+                    __(
+                        "You didn't verify your email address and you won't be able to receive any email notification from us."
+                    )
+                }}
                 <br />
-                Please click on the link sent to your email or
+                {{ __("Please click on the link sent to your email or") }}
+
                 <Link
                     class="btn btn-primary btn-sm"
                     :href="route('verification.send')"
                     as="button"
                     method="post"
                 >
-                    Resend verification email
+                    {{ __("Resend verification email") }}
                 </Link>
             </h6>
         </div>
@@ -192,7 +197,7 @@ const localize = () => {
             role="alert"
             v-if="$page.props.flash.status === 'verification-link-sent'"
         >
-            Email verification has been sent to your email.
+            {{ __("Email verification has been sent to your email.") }}
         </div>
     </template>
     <div

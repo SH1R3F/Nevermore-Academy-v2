@@ -30,6 +30,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -67,6 +68,5 @@ class Kernel extends HttpKernel
         'mobile-verified' => \App\Http\Middleware\EnsureMobileIsVerified::class,
         '2fa' => \App\Http\Middleware\TwoFactorAuthentication::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
-        'setlocale' => \App\Http\Middleware\SetLocale::class,
     ];
 }

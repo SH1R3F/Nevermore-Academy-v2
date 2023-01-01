@@ -19,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -29,8 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Guard $auth)
     {
-
-        URL::defaults(['locale' => app()->getLocale()]);
 
         Schema::defaultStringLength(191);
 

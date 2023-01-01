@@ -6,28 +6,32 @@ defineProps({
 </script>
 
 <template>
-    <Head :title="`Assignment ${assignment.title}`" />
+    <Head :title="__('Assignment :title', { title: assignment.title })" />
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
                 <div class="card p-5">
                     <div class="d-flex align-items-center">
                         <p class="mb-0">
-                            Assignment <b>{{ assignment.title }}</b>
+                            {{
+                                __("Assignment :title", {
+                                    title: assignment.title,
+                                })
+                            }}
                         </p>
                         <Link
                             v-if="can.update_assignment"
                             :href="route('assignments.edit', assignment.id)"
                             class="btn btn-primary btn-sm ms-auto"
-                            >Edit</Link
+                            >{{ __("Edit") }}</Link
                         >
                     </div>
 
-                    <p class="mb-0">Assignment requirement:</p>
+                    <p class="mb-0">{{ __("Required Information") }}:</p>
                     <pre class="text-bolder">{{ assignment.requirement }}</pre>
 
                     <p class="mb-0">
-                        Assignment deadline:
+                        {{ __("Deadline") }}:
                         <span class="text-bolder">{{
                             assignment.deadline
                         }}</span>
@@ -36,7 +40,7 @@ defineProps({
                     <hr />
 
                     <p class="mb-0">
-                        Total submissions:
+                        {{ __("Total submissions") }}:
                         <span class="text-bolder">
                             {{
                                 assignment.submissions_count ||
@@ -58,7 +62,8 @@ defineProps({
                                 </p>
                                 <div v-if="submission.degree">
                                     <span class="text-bolder"
-                                        >Degree: {{ submission.degree }}</span
+                                        >{{ __("Degree") }}:
+                                        {{ submission.degree }}</span
                                     >
                                     <Link
                                         :href="
@@ -68,7 +73,7 @@ defineProps({
                                             )
                                         "
                                         class="btn btn-default btn-sm"
-                                        >Show submission</Link
+                                        >{{ __("Show submission") }}</Link
                                     >
                                 </div>
                                 <div v-else>
@@ -81,7 +86,7 @@ defineProps({
                                             )
                                         "
                                         class="btn btn-primary btn-sm ms-auto"
-                                        >Give degree</Link
+                                        >{{ __("Give degree") }}</Link
                                     >
                                 </div>
                             </div>

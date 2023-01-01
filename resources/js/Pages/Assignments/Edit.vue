@@ -13,7 +13,7 @@ const form = useForm({
 </script>
 
 <template>
-    <Head :title="`Edit assignment ${assignment.title}`" />
+    <Head :title="__('Edit assignment :title', { title: assignment.title })" />
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -26,21 +26,24 @@ const form = useForm({
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
                                 <p class="mb-0">
-                                    Edit assignment
-                                    <b>{{ assignment.title }}</b>
+                                    {{
+                                        __("Edit assignment :title", {
+                                            title: assignment.title,
+                                        })
+                                    }}
                                 </p>
                                 <button
                                     class="btn btn-primary btn-sm ms-auto"
                                     type="submit"
                                     :disabled="form.processing"
                                 >
-                                    Save
+                                    {{ __("Save") }}
                                 </button>
                             </div>
                         </div>
                         <div class="card-body">
                             <p class="text-uppercase text-sm">
-                                Assignment Information
+                                {{ __("Required Information") }}
                             </p>
                             <div class="row">
                                 <div class="col-12">
@@ -48,7 +51,7 @@ const form = useForm({
                                         <label
                                             for="title"
                                             class="form-control-label"
-                                            >Title</label
+                                            >{{ __("Title") }}</label
                                         >
                                         <input
                                             class="form-control"
@@ -69,7 +72,7 @@ const form = useForm({
                                         <label
                                             for="requirement"
                                             class="form-control-label"
-                                            >Requirement</label
+                                            >{{ __("Requirement") }}</label
                                         >
                                         <textarea
                                             class="form-control"
@@ -89,7 +92,7 @@ const form = useForm({
                                         <label
                                             for="deadline"
                                             class="form-control-label"
-                                            >Deadline</label
+                                            >{{ __("Deadline") }}</label
                                         >
                                         <input
                                             class="form-control"

@@ -23,9 +23,8 @@ use App\Http\Controllers\SubmissionController;
 Route::redirect('/', app()->getLocale());
 
 Route::group([
-    'prefix' => '{locale?}',
-    'where' => ['locale', 'ar|en'],
-    'middleware' => ['setlocale']
+    'prefix' => '{locale}',
+    'where' => ['locale' => 'ar|en'],
 ], function () {
 
     /* Mobile verification routes */

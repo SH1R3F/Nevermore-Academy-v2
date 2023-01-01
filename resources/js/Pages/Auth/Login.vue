@@ -13,7 +13,7 @@ export default { layout: Guest };
 </script>
 
 <template>
-    <Head title="Login" />
+    <Head :title="__('Sign in')" />
     <section>
         <div class="page-header min-vh-100">
             <div class="container">
@@ -23,9 +23,15 @@ export default { layout: Guest };
                     >
                         <div class="card card-plain">
                             <div class="card-header pb-0 text-start">
-                                <h4 class="font-weight-bolder">Sign In</h4>
+                                <h4 class="font-weight-bolder">
+                                    {{ __("Sign in") }}
+                                </h4>
                                 <p class="mb-0">
-                                    Enter your email and password to sign in
+                                    {{
+                                        __(
+                                            "Enter your email and password to sign in"
+                                        )
+                                    }}
                                 </p>
                             </div>
                             <div class="card-body">
@@ -37,7 +43,7 @@ export default { layout: Guest };
                                             name="email"
                                             type="email"
                                             class="form-control form-control-lg"
-                                            placeholder="Email"
+                                            :placeholder="__('Email')"
                                             aria-label="Email"
                                             v-model="form.email"
                                         />
@@ -52,7 +58,7 @@ export default { layout: Guest };
                                             name="password"
                                             type="password"
                                             class="form-control form-control-lg"
-                                            placeholder="Password"
+                                            :placeholder="__('Password')"
                                             aria-label="Password"
                                             v-model="form.password"
                                         />
@@ -68,7 +74,7 @@ export default { layout: Guest };
                                         <label
                                             class="form-check-label"
                                             for="rememberMe"
-                                            >Remember me</label
+                                            >{{ __("Remember me") }}</label
                                         >
                                     </div>
                                     <div class="text-center">
@@ -77,7 +83,7 @@ export default { layout: Guest };
                                             class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
                                             :disabled="form.processing"
                                         >
-                                            Sign in
+                                            {{ __("Login") }}
                                         </button>
                                     </div>
                                 </form>
@@ -86,11 +92,11 @@ export default { layout: Guest };
                                 class="card-footer text-center pt-0 px-lg-2 px-1"
                             >
                                 <p class="mb-4 text-sm mx-auto">
-                                    Don't have an account?
+                                    {{ __("Don't have an account?") }}
                                     <Link
                                         :href="route('register')"
                                         class="text-primary text-gradient font-weight-bold"
-                                        >Sign up</Link
+                                        >{{ __("Sign up") }}</Link
                                     >
                                 </p>
                             </div>
@@ -112,11 +118,18 @@ export default { layout: Guest };
                             <h4
                                 class="mt-5 text-white font-weight-bolder position-relative"
                             >
-                                "Academic institution that nurtures outcasts"
+                                "{{
+                                    __(
+                                        "Academic institution that nurtures outcasts"
+                                    )
+                                }}"
                             </h4>
                             <p class="text-white position-relative">
-                                Nevermore is a safe haven for our students to
-                                learn and grow no matter who they are.
+                                {{
+                                    __(
+                                        "Nevermore is a safe haven for our students to learn and grow no matter who they are."
+                                    )
+                                }}
                             </p>
                         </div>
                     </div>

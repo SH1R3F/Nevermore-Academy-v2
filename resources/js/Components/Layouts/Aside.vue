@@ -43,7 +43,9 @@
                                 class="ni ni-tv-2 text-primary text-sm opacity-10"
                             ></i>
                         </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
+                        <span class="nav-link-text ms-1">{{
+                            __("Dashboard")
+                        }}</span>
                     </Link>
                 </li>
 
@@ -65,9 +67,9 @@
                                 class="ni ni-tv-2 text-primary text-sm opacity-10"
                             ></i>
                         </div>
-                        <span class="nav-link-text ms-1"
-                            >Create a notification</span
-                        >
+                        <span class="nav-link-text ms-1">{{
+                            __("Create a notification")
+                        }}</span>
                     </Link>
                 </li>
 
@@ -89,7 +91,9 @@
                                 class="ni ni-user-run text-primary text-sm opacity-10"
                             ></i>
                         </div>
-                        <span class="nav-link-text ms-1">Roles</span>
+                        <span class="nav-link-text ms-1">{{
+                            __("Roles")
+                        }}</span>
                     </Link>
                 </li>
                 <li
@@ -110,7 +114,9 @@
                                 class="ni ni-user-run text-primary text-sm opacity-10"
                             ></i>
                         </div>
-                        <span class="nav-link-text ms-1">Users</span>
+                        <span class="nav-link-text ms-1">{{
+                            __("Users")
+                        }}</span>
                     </Link>
                 </li>
                 <li
@@ -131,7 +137,9 @@
                                 class="ni ni-user-run text-primary text-sm opacity-10"
                             ></i>
                         </div>
-                        <span class="nav-link-text ms-1">Assignments</span>
+                        <span class="nav-link-text ms-1">{{
+                            __("Assignments")
+                        }}</span>
                     </Link>
                 </li>
                 <li
@@ -152,7 +160,9 @@
                                 class="ni ni-user-run text-primary text-sm opacity-10"
                             ></i>
                         </div>
-                        <span class="nav-link-text ms-1">Submissions</span>
+                        <span class="nav-link-text ms-1">{{
+                            __("Submissions")
+                        }}</span>
                     </Link>
                 </li>
             </ul>

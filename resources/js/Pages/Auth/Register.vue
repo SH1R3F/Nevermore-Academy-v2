@@ -28,10 +28,13 @@ export default { layout: Guest };
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5 text-center mx-auto">
-                    <h1 class="text-white mb-2 mt-5">Welcome!</h1>
+                    <h1 class="text-white mb-2 mt-5">{{ __("Welcome!") }}</h1>
                     <p class="text-lead text-white">
-                        Nevermore is a safe haven for our students to learn and
-                        grow no matter who they are.
+                        {{
+                            __(
+                                "Nevermore is a safe haven for our students to learn and grow no matter who they are."
+                            )
+                        }}
                     </p>
                 </div>
             </div>
@@ -48,8 +51,7 @@ export default { layout: Guest };
                                     name="name"
                                     type="text"
                                     class="form-control"
-                                    placeholder="Name"
-                                    aria-label="Name"
+                                    :placeholder="__('Name')"
                                     v-model="form.name"
                                 />
                                 <span
@@ -63,7 +65,7 @@ export default { layout: Guest };
                                     name="email"
                                     type="email"
                                     class="form-control"
-                                    placeholder="Email"
+                                    :placeholder="__('Email')"
                                     aria-label="Email"
                                     v-model="form.email"
                                 />
@@ -78,7 +80,7 @@ export default { layout: Guest };
                                     name="mobile"
                                     type="text"
                                     class="form-control"
-                                    placeholder="Mobile; eg: 01234567890"
+                                    :placeholder="__('Mobile; eg: 01234567890')"
                                     aria-label="Mobile"
                                     v-model="form.mobile"
                                 />
@@ -93,7 +95,7 @@ export default { layout: Guest };
                                     name="password"
                                     type="password"
                                     class="form-control"
-                                    placeholder="Password"
+                                    :placeholder="__('Password')"
                                     aria-label="Password"
                                     v-model="form.password"
                                 />
@@ -108,13 +110,15 @@ export default { layout: Guest };
                                     name="password_confirmation"
                                     type="password"
                                     class="form-control"
-                                    placeholder="Confirm password"
+                                    :placeholder="__('Confirm password')"
                                     aria-label="Password"
                                     v-model="form.password_confirmation"
                                 />
                             </div>
                             <div class="mb-3">
-                                <label for="image">Profile picture </label>
+                                <label for="image"
+                                    >{{ __("Profile picture") }}
+                                </label>
                                 <input
                                     name="image"
                                     id="image"
@@ -141,15 +145,15 @@ export default { layout: Guest };
                                     :disabled="form.processing"
                                     class="btn bg-gradient-dark w-100 my-4 mb-2"
                                 >
-                                    Sign up
+                                    {{ __("Sign up") }}
                                 </button>
                             </div>
                             <p class="text-sm mt-3 mb-0">
-                                Already have an account?
+                                {{ __("Already have an account?") }}
                                 <Link
                                     :href="route('login')"
                                     class="text-dark font-weight-bolder"
-                                    >Sign in</Link
+                                    >{{ __("Login") }}</Link
                                 >
                             </p>
                         </form>

@@ -17,6 +17,7 @@ createInertiaApp({
             .component("Link", Link)
             .component("Head", Head)
             .mixin({ methods: { route } })
+            .mixin(require("./localization"))
             .use(plugin)
             .mount(el);
     },

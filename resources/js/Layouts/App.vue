@@ -4,7 +4,7 @@ import Navbar from "../Components/Layouts/Navbar.vue";
 </script>
 
 <template>
-    <Head title="Nevermore academy" />
+    <Head :title="__('Nevermore academy')" />
     <div>
         <div class="min-height-300 bg-primary position-absolute w-100"></div>
 
