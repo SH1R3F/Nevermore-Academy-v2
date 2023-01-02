@@ -79,7 +79,7 @@ class AssignmentController extends Controller
     public function store(AssignmentRequest $request, AssignmentService $service)
     {
         $service->store($request->validated());
-        return redirect()->route('assignments.index')->with('status', 'Assignment created successfully');
+        return redirect()->route('assignments.index')->with('status', __('Assignment created successfully'));
     }
 
     /**
@@ -141,7 +141,7 @@ class AssignmentController extends Controller
     public function update(AssignmentRequest $request, Assignment $assignment, AssignmentService $service)
     {
         $service->update($request->validated(), $assignment);
-        return redirect()->back()->with('status', 'Assignment updated successfully');
+        return redirect()->back()->with('status', __('Assignment updated successfully'));
     }
 
     /**
@@ -153,6 +153,6 @@ class AssignmentController extends Controller
     public function destroy(Assignment $assignment)
     {
         $assignment->delete();
-        return redirect()->back()->with('status', 'Assignment deleted successfully');
+        return redirect()->back()->with('status', __('Assignment deleted successfully'));
     }
 }

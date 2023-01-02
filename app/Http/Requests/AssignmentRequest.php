@@ -28,7 +28,7 @@ class AssignmentRequest extends FormRequest
             'title_en' => ['nullable', 'string', 'max:255'],
             'requirement_ar' => ['nullable', 'string'],
             'requirement_en' => ['nullable', 'string'],
-            'deadline' => ['required', 'date', 'after_or_equal:today']
+            'deadline' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:today']
         ];
     }
 }

@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'mobile' => $this->mobile,
             'avatar' => $this->getFirstMediaUrl('images'),
             'role_id' => $this->role_id,
-            'role' => $this->role,
+            'role' => $this->whenLoaded('role'),
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
             'editable' => $user->can('update', $this->resource),
