@@ -68,7 +68,7 @@ class UserController extends Controller
     public function store(UserRequest $request, UserService $service)
     {
         $service->store($request->validated());
-        return redirect()->route('users.index')->with('status', 'User created successfully');
+        return redirect()->route('users.index')->with('status', __('User created successfully'));
     }
 
     /**
@@ -111,7 +111,7 @@ class UserController extends Controller
     {
         $service->update($request->validated(), $user);
 
-        return redirect()->back()->with('status', 'User updated successfully');
+        return redirect()->back()->with('status', __('User updated successfully'));
     }
 
     /**
@@ -125,6 +125,6 @@ class UserController extends Controller
         // Delete his media!
         $user->clearMediaCollection();
         $user->delete();
-        return redirect()->back()->with('status', 'User deleted successfully');
+        return redirect()->back()->with('status', __('User deleted successfully'));
     }
 }

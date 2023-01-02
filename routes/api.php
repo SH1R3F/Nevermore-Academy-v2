@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -48,5 +49,8 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 
 
         /* Roles management */
         Route::resource('roles', RoleController::class)->except(['create', 'edit']);
+
+        /* Users management */
+        Route::resource('users', UserController::class)->except(['create', 'edit']);
     });
 });

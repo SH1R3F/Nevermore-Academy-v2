@@ -10,7 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 class UserService
 {
 
-    public function store(array $data): void
+    public function store(array $data): User
     {
         // Hash password
         $data['password'] = bcrypt($data['password']);
@@ -26,6 +26,8 @@ class UserService
 
         // Fire event for user creation here when you need to.
         event(new Registered($user));
+
+        return $user;
     }
 
     public function update(array $data, User $user): void
