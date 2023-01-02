@@ -20,7 +20,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 
-class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ MustVerifyEmail, HasMedia /* ,MustVerifyTwoFactor */
+class User extends Authenticatable implements
+    MustVerifyMobileInterface,
+    MustVerifyEmail,
+    HasMedia,
+    MustVerifyTwoFactor
 {
     use HasApiTokens,
         HasFactory,
@@ -57,6 +61,9 @@ class User extends Authenticatable implements /* MustVerifyMobileInterface,*/ Mu
         'remember_token',
         'mobile_verification_code',
         'two_fa_code',
+        "two_fa_expires_at",
+        "two_factor_secret",
+        "two_factor_recovery_codes",
     ];
 
     /**

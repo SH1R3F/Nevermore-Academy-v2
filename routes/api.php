@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\MobileVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +17,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'prefix' => '{locale}', 'where' => ['locale' => 'ar|en']
-], function () {
+Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 'api.'], function () {
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         return $request->user();
     });
 
     Route::prefix('auth')->group(function () {
-        Route::post('/login', [AuthController::class, 'login']);
+        // Guest routes
+        Route::post('/login', [LoginController::class, 'login']);
+        Route::post('/register', [RegisterController::class, 'create']);
+
+        // Authenticated routes
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/user', [LoginController::class, 'user']);
+            Route::post('/logout', [LoginController::class, 'logout']);
+
+            // Mobile verification routes
+            Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');
+            Route::post('verify-mobile/resend', [MobileVerificationController::class, 'resend'])->name('verify-mobile.resend')->middleware('throttle:6,1');
+        });
+    });
+
+    Route::middleware(['auth:sanctum', 'mobile-verified'])->group(function () {
+        // Dashboard
+        Route::get('/dashboard', function () {
+            return ' critical info';
+        });
     });
 });
