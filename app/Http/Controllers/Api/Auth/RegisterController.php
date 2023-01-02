@@ -36,8 +36,11 @@ class RegisterController extends Controller
             'image' => ['required', File::types(['jpg', 'png', 'gif'])->max(12 * 1024)]
         ]);
 
+        $data['password'] = bcrypt($data['password']);
+        $data['role_id'] = 3;
+
         // Create user
-        $user = User::create(['role_id' => 3] + $data);
+        $user = User::create($data);
 
         event(new Registered($user));
 

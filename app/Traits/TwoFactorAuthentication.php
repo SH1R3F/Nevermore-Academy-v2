@@ -41,6 +41,6 @@ trait TwoFactorAuthentication
             'two_fa_code' => rand(111111, 999999),
             'two_fa_expires_at' => now()->addMinutes(10),
         ])->save();
-        // $this->notify(new SendTwoFactorAuthenticationCode($via));
+        $this->notify(new SendTwoFactorAuthenticationCode($via));
     }
 }

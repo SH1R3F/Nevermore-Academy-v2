@@ -12,7 +12,7 @@ class VerifyMobileService
         // Validate
         $request->validate([
             'code' => ['required', 'numeric', function ($attribute, $value, $fail) use ($user) {
-                if ($value != $user->mobile_verification_code) $fail(__("The :attribute is incorrect", ['attribute' => $attribute]));
+                if ($value != $user->mobile_verification_code) return $fail(__("The :attribute is incorrect", ['attribute' => $attribute]));
             }]
         ]);
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\MobileVerificationController;
+use App\Http\Controllers\Api\Auth\TwoFactorAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +36,13 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 
             // Mobile verification routes
             Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');
             Route::post('verify-mobile/resend', [MobileVerificationController::class, 'resend'])->name('verify-mobile.resend')->middleware('throttle:6,1');
+
+            Route::post('/two-factor-authentication/verify', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.verify');
+            Route::post('/two-factor-authentication/send', [TwoFactorAuthenticationController::class, 'send'])->name('2fa.send');
         });
     });
 
-    Route::middleware(['auth:sanctum', 'mobile-verified'])->group(function () {
+    Route::middleware(['auth:sanctum', 'mobile-verified', '2fa'])->group(function () {
         // Dashboard
         Route::get('/dashboard', function () {
             return ' critical info';

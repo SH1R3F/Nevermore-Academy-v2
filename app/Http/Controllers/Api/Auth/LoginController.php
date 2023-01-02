@@ -34,14 +34,20 @@ class LoginController extends Controller
             ]);
         }
 
+        $user = $request->user();
+
+        // Generate 2fa code
+        $user->forceFill(['two_fa_code' => rand(111111, 999999), 'two_fa_expires_at' => now()->addMinutes(10),])->save();
+
         // Issue token
-        $token = $request->user()->createToken('accessToken');
+        $token = $user->createToken('accessToken');
 
         // Return response
         return $this->apiResponse(
             __('Logged in successfully'),
             [
-                'accessToken' => $token->plainTextToken
+                'accessToken' => $token->plainTextToken,
+                'user' => new UserResource($user)
             ]
         );
     }

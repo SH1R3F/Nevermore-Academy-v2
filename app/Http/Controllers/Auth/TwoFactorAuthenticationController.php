@@ -25,14 +25,11 @@ class TwoFactorAuthenticationController extends Controller
     /**
      * Send the 2fa code via the way he chose
      */
-    public function send(Request $request)
+    public function send(Request $request, TwoFactorService $service)
     {
         if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
 
-        $user = Auth::user();
-        $request->validate(['choice' => ['required', 'in:sms,mail']]);
-
-        $user->sendTwoFactorAuthenticationNotification($request->choice);
+        $service->send($request, Auth::user());
         Session::put('2fa_choice', $request->choice);
 
         return redirect()->route('2fa.notice')->with('status', "A verification code has been sent via {$request->choice}");
@@ -50,27 +47,11 @@ class TwoFactorAuthenticationController extends Controller
     /**
      * Check the code and allow him to login if correct
      */
-    public function verify(Request $request)
+    public function verify(Request $request, TwoFactorService $service)
     {
         if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
 
-        $user = Auth::user();
-        $request->validate([
-            'code' => [
-                'required',
-                'numeric',
-                function ($attribute, $value, $fail) use ($user) {
-                    // Check equal validity
-                    if ($value != $user->two_fa_code) $fail("The $attribute is incorrect");
-
-                    // Check time validity
-                    if ($user->two_fa_expires_at->lt(now())) $fail("The $attribute is expired");
-                }
-            ]
-        ]);
-
-        // Code is correct
-        $user->markTwoFactorAuthenticated();
+        $service->verify($request, Auth::user());
 
         return redirect(RouteServiceProvider::HOME);
     }
