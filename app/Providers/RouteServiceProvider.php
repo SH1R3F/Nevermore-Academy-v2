@@ -30,8 +30,11 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::middleware('api')
-                ->prefix('api')
+                ->domain('api.nevermore-academy.test')
+                // ->prefix('api')
                 ->group(base_path('routes/api.php'));
+            // vhost
+            // 
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));

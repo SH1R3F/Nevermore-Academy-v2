@@ -20,7 +20,7 @@ use App\Http\Controllers\SubmissionController;
 |
 */
 
-Route::redirect('/', app()->getLocale());
+// Route::redirect('/', app()->getLocale());
 
 Route::group([
     'prefix' => '{locale}',
