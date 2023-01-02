@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/', function () {
-    return 'welcome to api';
+Route::post('/something/should-come-here-directly', function () {
+    return 'shoud come here directly';
 });
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
