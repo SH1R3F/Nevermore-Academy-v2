@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\SubmissionController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\MobileVerificationController;
@@ -56,5 +57,11 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 
 
         /* Assignments management */
         Route::resource('assignments', AssignmentController::class)->except(['create', 'edit']);
+
+        /* Students submissions to assignment */
+        Route::get('submissions', [SubmissionController::class, 'index'])->name('submissions.index'); // List my submissions
+        Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store'); // Submit submission
+        Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
+        Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update'); // Give degree by teacher
     });
 });

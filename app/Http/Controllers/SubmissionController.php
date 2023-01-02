@@ -63,13 +63,13 @@ class SubmissionController extends Controller
      * @param  \App\Models\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function create(Assignment $assignment)
+    public function create(Assignment $assignment, SubmissionService $service)
     {
         // Can we do this in constructor? or in routes?
         $this->authorize('create', ['App\Models\Submission', $assignment]);
 
         // Student can only submit assignment once.
-        if ($this->userSubmittedBefore($assignment)) return redirect()->route('submissions.show', $assignment->id)->with('status', 'You already submitted once');
+        if ($service->userSubmittedBefore($assignment)) return redirect()->route('submissions.show', $assignment->id)->with('status', 'You already submitted once');
 
         return inertia('Submissions/Create', compact('assignment'));
     }
@@ -87,11 +87,11 @@ class SubmissionController extends Controller
         $this->authorize('create', ['App\Models\Submission', $assignment]);
 
         // Student can only submit assignment once.
-        if ($this->userSubmittedBefore($assignment)) return redirect()->route('submissions.show', $assignment->id)->with('status', 'You already submitted once');
+        if ($service->userSubmittedBefore($assignment)) return redirect()->route('submissions.show', $assignment->id)->with('status', __('You already submitted once'));
 
         $service->store($request->validated(), $assignment);
 
-        return redirect()->route('assignments.index')->with('status', 'Submission saved successfully');
+        return redirect()->route('assignments.index')->with('status', __('Submission saved successfully'));
     }
 
     /**
@@ -135,25 +135,6 @@ class SubmissionController extends Controller
 
         $service->degreeSubmission($data, $submission);
 
-        return redirect()->route('assignments.show', $submission->assignment_id)->with('status', 'Submission degreed successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Submission  $submission
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Submission $submission)
-    {
-        //
-    }
-
-    private function userSubmittedBefore(Assignment $assignment): bool
-    {
-        // Is here a good place for this? Or should I put it inside policy?
-        // This is dealing with the request I guess we shouldn't put inside a service
-        // What about the return? it redirects the user so shouldn't the redirection be handled in the controller method itself?
-        return !!$assignment->submissions()->where('student_id', Auth::user()->id)->count();
+        return redirect()->route('assignments.show', $submission->assignment_id)->with('status', __('Submission degreed successfully'));
     }
 }

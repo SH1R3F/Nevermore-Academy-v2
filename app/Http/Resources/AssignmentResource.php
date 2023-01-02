@@ -22,7 +22,7 @@ class AssignmentResource extends JsonResource
             'requirement' => $this->requirement,
             'deadline' => $this->deadline,
             'teacher_id' => $this->teacher_id,
-            'teacher' => $this->whenLoaded('teacher', new UserResource($this->teacher)),
+            'teacher' => new UserResource($this->whenLoaded('teacher')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
