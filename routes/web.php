@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\MobileVerificationController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SubmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,5 +77,8 @@ Route::group([
         Route::get('assignment/{assignment}/submit', [SubmissionController::class, 'create'])->name('submissions.create'); // Submit submission
         Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store'); // Submit submission
         Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
+
+        /* Articles management */
+        Route::resource('articles', ArticleController::class);
     });
 });

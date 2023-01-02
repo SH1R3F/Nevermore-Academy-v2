@@ -5,10 +5,12 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Article;
 use App\Models\Assignment;
 use App\Models\Submission;
 use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\ArticlePolicy;
 use App\Policies\AssignmentPolicy;
 use App\Policies\SubmissionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Assignment::class => AssignmentPolicy::class,
         Submission::class => SubmissionPolicy::class,
+        Article::class => ArticlePolicy::class,
     ];
 
     /**

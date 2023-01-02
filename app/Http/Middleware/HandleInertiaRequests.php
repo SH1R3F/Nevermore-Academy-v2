@@ -52,6 +52,7 @@ class HandleInertiaRequests extends Middleware
                     'viewAny_user' => $user->can('viewAny', 'App\Models\User'),
                     'viewAny_assignment' => $user->can('viewAny', 'App\Models\Assignment'),
                     'viewAny_submission' => $user->can('viewAny', 'App\Models\Submission'),
+                    'viewAny_article' => $user->can('viewAny', 'App\Models\Article'),
                 ]
             ],
             'flash' => [

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Models\Article;
 use App\Traits\HasRoles;
 use App\Models\Assignment;
 use Illuminate\Http\Request;
@@ -100,5 +101,10 @@ class User extends Authenticatable implements
     public function assignments(): HasMany
     {
         return $this->hasMany(Assignment::class, 'teacher_id');
+    }
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class, 'author_id');
     }
 }

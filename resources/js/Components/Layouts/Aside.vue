@@ -165,6 +165,29 @@
                         }}</span>
                     </Link>
                 </li>
+                <li
+                    class="nav-item"
+                    v-if="$page.props.authUser.can.viewAny_article"
+                >
+                    <Link
+                        class="nav-link"
+                        :class="{
+                            active: $page.url.startsWith('/articles'),
+                        }"
+                        :href="route('articles.index')"
+                    >
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
+                        >
+                            <i
+                                class="ni ni-user-run text-primary text-sm opacity-10"
+                            ></i>
+                        </div>
+                        <span class="nav-link-text ms-1">{{
+                            __("Articles")
+                        }}</span>
+                    </Link>
+                </li>
             </ul>
         </div>
     </aside>
