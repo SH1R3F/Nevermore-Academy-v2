@@ -12,29 +12,30 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        dd('Works successfully');
         // Validate entries
-        // $data = $request->validate([
-        //     'email' => ['required', 'email'],
-        //     'password' => ['required']
-        // ]);
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
 
-        // // Attempt login
-        // if (!Auth::attempt($data)) {
-        //     throw ValidationException::withMessages([
-        //         'email' => [trans('auth.failed')],
-        //     ]);
-        // }
+        // Restrictions, throttling, etc goes here
 
-        // // Issue token
-        // $token = $request->user()->createToken('accessToken');
+        // Attempt login
+        if (!Auth::attempt($data)) {
+            throw ValidationException::withMessages([
+                'email' => [trans('auth.failed')],
+            ]);
+        }
 
-        // // Return response
-        // return $this->apiResponse(
-        //     __('Logged in successfully'),
-        //     [
-        //         'accessToken' => $token
-        //     ]
-        // );
+        // Issue token
+        $token = $request->user()->createToken('accessToken');
+
+        // Return response
+        return $this->apiResponse(
+            __('Logged in successfully'),
+            [
+                'accessToken' => $token->plainTextToken
+            ]
+        );
     }
 }

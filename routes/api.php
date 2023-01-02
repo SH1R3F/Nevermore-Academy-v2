@@ -15,15 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/something/should-come-here-directly', function () {
-    return 'shoud come here directly';
-});
+Route::group([
+    'prefix' => '{locale}', 'where' => ['locale' => 'ar|en']
+], function () {
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::prefix('auth')->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::prefix('auth')->group(function () {
+        Route::post('/login', [AuthController::class, 'login']);
+    });
 });
