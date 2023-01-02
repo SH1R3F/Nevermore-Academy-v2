@@ -21,10 +21,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 
 class User extends Authenticatable implements
-    MustVerifyMobileInterface,
+    // MustVerifyMobileInterface,
+    // MustVerifyTwoFactor,
     MustVerifyEmail,
-    HasMedia,
-    MustVerifyTwoFactor
+    HasMedia
 {
     use HasApiTokens,
         HasFactory,

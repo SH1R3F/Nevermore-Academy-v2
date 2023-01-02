@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\MobileVerificationController;
 use App\Http\Controllers\Api\Auth\TwoFactorAuthenticationController;
@@ -19,10 +21,8 @@ use App\Http\Controllers\Api\Auth\TwoFactorAuthenticationController;
 */
 
 Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 'api.'], function () {
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-        return $request->user();
-    });
 
+    /* Authentication routes */
     Route::prefix('auth')->group(function () {
         // Guest routes
         Route::post('/login', [LoginController::class, 'login']);
@@ -43,9 +43,10 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 
     });
 
     Route::middleware(['auth:sanctum', 'mobile-verified', '2fa'])->group(function () {
-        // Dashboard
-        Route::get('/dashboard', function () {
-            return ' critical info';
-        });
+        /* Notifications management */
+        Route::post('/push-notifications', [NotificationController::class, 'store'])->middleware('role:superadmin')->name('notifications.store');
+
+        /* Roles management */
+        Route::resource('roles', RoleController::class)->except(['create', 'edit']);
     });
 });

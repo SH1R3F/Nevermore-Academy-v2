@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\Twilio\TwilioSmsMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PushAlert extends Notification // implements ShouldQueue
+class PushAlert extends Notification implements ShouldQueue
 {
     use Queueable;
 

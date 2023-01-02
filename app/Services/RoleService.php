@@ -7,13 +7,14 @@ use App\Models\Role;
 class RoleService
 {
 
-    public function store(array $data): void
+    public function store(array $data): Role
     {
         // Store role
         $role = Role::create($data);
 
         // Store its permissions
         $role->setPermissionsBySlugs($data['permissions']);
+        return $role;
     }
 
     public function update(array $data, Role $role): void

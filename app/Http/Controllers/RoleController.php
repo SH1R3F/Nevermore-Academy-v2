@@ -64,7 +64,7 @@ class RoleController extends Controller
     public function store(RoleRequest $request, RoleService $service)
     {
         $service->store($request->validated());
-        return redirect()->route('roles.index')->with('status', 'Role created successfully');
+        return redirect()->route('roles.index')->with('status', __('Role created successfully'));
     }
 
     /**
@@ -107,7 +107,7 @@ class RoleController extends Controller
     public function update(RoleRequest $request, Role $role, RoleService $service)
     {
         $service->update($request->validated(), $role);
-        return redirect()->back()->with('status', 'Role updated successfully');
+        return redirect()->back()->with('status', __('Role updated successfully'));
     }
 
     /**
@@ -119,6 +119,6 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        return redirect()->back()->with('status', 'Role deleted successfully');
+        return redirect()->back()->with('status', __('Role deleted successfully'));
     }
 }

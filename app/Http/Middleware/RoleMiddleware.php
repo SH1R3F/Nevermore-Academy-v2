@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\ApiResponse;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
+
+    use ApiResponse;
     /**
      * Handle an incoming request.
      *
@@ -19,7 +22,12 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string $role)
     {
-        abort_if(!Auth::user()->hasRole($role), Response::HTTP_FORBIDDEN);
+        if (!Auth::user()->hasRole($role)) {
+            abort_if(!$request->expectsJson(), Response::HTTP_FORBIDDEN);
+
+            return $this->apiResponse(__("You don't have privileges to enter this page"), null, Response::HTTP_FORBIDDEN);
+        }
+
         return $next($request);
     }
 }
