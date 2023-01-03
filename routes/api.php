@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\SubmissionController;
@@ -63,5 +64,8 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'ar|en'], 'as' => 
         Route::post('assignment/{assignment}/submit', [SubmissionController::class, 'store'])->name('submissions.store'); // Submit submission
         Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
         Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update'); // Give degree by teacher
+
+        /* Articles management */
+        Route::resource('articles', ArticleController::class)->except(['create', 'edit']);
     });
 });
