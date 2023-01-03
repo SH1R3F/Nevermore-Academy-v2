@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\User;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Spatie\MediaLibrary\HasMedia;
 
 class Article extends Model implements TranslatableContract, HasMedia
 {
@@ -31,5 +32,10 @@ class Article extends Model implements TranslatableContract, HasMedia
             $slug = "{$original}-" . $count++;
         }
         return $slug;
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

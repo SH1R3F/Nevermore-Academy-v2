@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
     article: Object,
 });
 </script>
@@ -20,7 +20,7 @@ defineProps({
                     <hr />
                     <p v-html="article.data.content"></p>
                     <hr />
-                    tags:
+                    tags: {{ article.data.tags }}
                 </div>
             </div>
         </div>

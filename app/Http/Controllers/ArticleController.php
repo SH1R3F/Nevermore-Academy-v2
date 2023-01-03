@@ -30,7 +30,7 @@ class ArticleController extends Controller
     public function index()
     {
         $user = request()->user();
-        $articles = Article::with('author')
+        $articles = Article::with('author', 'tags')
             // If not superadmin only show his articles.
             ->when(!$user->hasRole('superadmin'), fn ($query) => $query->where('author_id', $user->id))
             ->orderBy('id', 'DESC')
@@ -76,7 +76,7 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         return inertia('Articles/Show', [
-            'article' => new ArticleResource($article)
+            'article' => new ArticleResource($article->load('tags'))
         ]);
     }
 
@@ -89,7 +89,7 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         return inertia('Articles/Edit', [
-            'article' => new ArticleResource($article)
+            'article' => new ArticleResource($article->load('tags'))
         ]);
     }
 

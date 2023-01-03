@@ -34,6 +34,14 @@ class ArticleRequest extends FormRequest
             'title_ar' => ['nullable', 'max:255'],
             'content_en' => ['required'],
             'content_ar' => ['nullable'],
+            'tags' => ['nullable', 'array'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'tags' => array_map('trim', explode(',', $this->tags))
+        ]);
     }
 }

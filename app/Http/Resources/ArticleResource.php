@@ -25,6 +25,7 @@ class ArticleResource extends JsonResource
             'content' => Str::of($this->content)->markdown(),
             'author' => new UserResource($this->whenLoaded('author')),
             'translations' => $this->translations,
+            'tags' => implode(', ', $this->tags->pluck('name')->toArray()),
 
             'viewable' => $user->can('view', $this->resource),
             'editable' => $user->can('update', $this->resource),

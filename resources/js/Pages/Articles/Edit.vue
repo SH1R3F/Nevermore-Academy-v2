@@ -13,6 +13,7 @@ const form = useForm({
     title_en: props.article.data.translations[1].title,
     content_ar: props.article.data.translations[0].content,
     content_en: props.article.data.translations[1].content,
+    tags: props.article.data.tags,
     _method: "PUT",
 });
 </script>
@@ -164,6 +165,29 @@ const form = useForm({
                                             class="text-danger text-sm"
                                             v-if="form.errors.content_en"
                                             >{{ form.errors.content_en }}</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label
+                                            for="tags"
+                                            class="form-control-label"
+                                            >{{ __("Tags") }}</label
+                                        >
+                                        <input
+                                            class="form-control"
+                                            id="tags"
+                                            type="text"
+                                            v-model="form.tags"
+                                        />
+                                        <a href="#" class="text-muted"
+                                            >Comma separated tags</a
+                                        >
+                                        <span
+                                            class="text-danger text-sm"
+                                            v-if="form.errors.tags"
+                                            >{{ form.errors.tags }}</span
                                         >
                                     </div>
                                 </div>

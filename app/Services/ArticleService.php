@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 
 class ArticleService
@@ -11,6 +12,7 @@ class ArticleService
 
     public function store(array $data): Article
     {
+
         $data['slug'] = Article::generateUniqueSlug(Str::slug($data['title_en']));
         $data['author_id'] = request()->user()->id;
         $data['en'] = [
@@ -25,6 +27,13 @@ class ArticleService
         $article = Article::create($data);
 
         $article->addMediaFromRequest('image')->toMediaCollection('images');
+
+        // Tags
+        collect($data['tags'])->map(function ($tag) {
+            Tag::firstOrCreate(['name' => $tag]);
+        });
+
+        $article->tags()->sync(Tag::whereIn('name', $data['tags'])->pluck('id'));
 
         return $article;
     }
@@ -47,5 +56,12 @@ class ArticleService
         if (isset($data['image'])) $article->clearMediaCollectionExcept('images', $article->addMediaFromRequest('image')->toMediaCollection('images'));
 
         $article->update($data);
+
+        // Tags
+        collect($data['tags'])->map(function ($tag) {
+            Tag::firstOrCreate(['name' => $tag]);
+        });
+
+        $article->tags()->sync(Tag::whereIn('name', $data['tags'])->pluck('id'));
     }
 }

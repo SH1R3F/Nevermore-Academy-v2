@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Submission;
 use Illuminate\Database\Eloquent\Model;
@@ -30,5 +31,10 @@ class Assignment extends Model
     public function submissions(): HasMany
     {
         return $this->hasMany(Submission::class);
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }
