@@ -67,6 +67,7 @@ Route::prefix('v1')->group(function () {
             Route::put('submissions/{submission}', [SubmissionController::class, 'update'])->name('submissions.update'); // Give degree by teacher
 
             /* Articles management */
+            Route::get('articles/export', [ArticleController::class, 'export'])->name('articles.export');
             Route::resource('articles', ArticleController::class)->except(['create', 'edit']);
         });
     });

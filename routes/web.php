@@ -79,6 +79,7 @@ Route::group([
         Route::get('assignment/{assignment}/submission', [SubmissionController::class, 'show'])->name('submissions.show'); // Show my submission
 
         /* Articles management */
+        Route::get('articles/export', [ArticleController::class, 'export'])->name('articles.export');
         Route::resource('articles', ArticleController::class);
     });
 });

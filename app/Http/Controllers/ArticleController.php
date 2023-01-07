@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Exports\ArticlesExport;
+use App\Services\ArticleService;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Resources\ArticleResource;
-use App\Services\ArticleService;
 
 class ArticleController extends Controller
 {
@@ -41,6 +43,17 @@ class ArticleController extends Controller
                 'creatable' => $user->can('create', Article::class)
             ])
         ]);
+    }
+
+    /**
+     * Export a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function export()
+    {
+        $this->authorize('viewAny', Article::class);
+        return Excel::download(new ArticlesExport, 'articles.xlsx');
     }
 
     /**

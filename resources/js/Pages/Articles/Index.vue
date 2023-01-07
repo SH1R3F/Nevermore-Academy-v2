@@ -17,6 +17,11 @@ const props = defineProps({
                             <h6>{{ __("Articles") }}</h6>
                         </div>
                         <div class="px-4 pt-3">
+                            <a
+                                :href="route('articles.export')"
+                                class="btn btn-light"
+                                >{{ __("Export") }}</a
+                            >
                             <Link
                                 v-if="articles.creatable"
                                 :href="route('articles.create')"

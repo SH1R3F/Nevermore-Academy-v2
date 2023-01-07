@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Exports\ArticlesExport;
 use App\Services\ArticleService;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Resources\ArticleResource;
 
@@ -37,6 +39,17 @@ class ArticleController extends Controller
             ->paginate(10);
 
         return ArticleResource::collection($articles);
+    }
+
+    /**
+     * Export a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function export()
+    {
+        $this->authorize('viewAny', Article::class);
+        return Excel::download(new ArticlesExport, 'articles.xlsx');
     }
 
     /**
