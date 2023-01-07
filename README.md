@@ -20,7 +20,7 @@
 [x] Localization on both the backend and frontend statically and dynamically through a URL segment\
 [x] Provide API on a subdomain\
 [x] Articles system [CRUD] with unique generated slug & images.\
-[] Morph taggables.
+[x] Morph taggables.
 
 ---
 
