@@ -65,6 +65,20 @@ const props = defineProps({
                                         </td>
 
                                         <td class="align-middle">
+                                            <a
+                                                v-if="article.viewable"
+                                                :href="
+                                                    route(
+                                                        'articles.pdf',
+                                                        article.id
+                                                    )
+                                                "
+                                                class="btn btn-warning font-weight-bold text-xs mx-1"
+                                                data-toggle="tooltip"
+                                                data-original-title="Export pdf"
+                                            >
+                                                {{ __("Pdf") }}
+                                            </a>
                                             <Link
                                                 v-if="article.viewable"
                                                 :href="
