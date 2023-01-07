@@ -77,6 +77,19 @@ class ArticleController extends Controller
         return new ArticleResource($article);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function pdf(Article $article)
+    {
+        $this->authorize('view', $article);
+
+        $pdf = \PDF::loadView('pdf.article', compact('article'));
+        return $pdf->stream("{$article->title}.pdf");
+    }
 
     /**
      * Update the specified resource in storage.
