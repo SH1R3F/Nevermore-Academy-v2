@@ -26,12 +26,8 @@ class Article extends Model implements TranslatableContract, HasMedia
 
     public static function generateUniqueSlug($slug)
     {
-        $original = $slug;
-        $count = 1;
-        while (static::whereSlug($slug)->exists()) {
-            $slug = "{$original}-" . $count++;
-        }
-        return $slug;
+        $n = static::where('slug', 'regexp', "^$slug(-\d+)?$")->count();
+        return $n ? "$slug-$n" : $slug;
     }
 
     public function tags()
