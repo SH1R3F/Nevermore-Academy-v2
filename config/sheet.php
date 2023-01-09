@@ -24,7 +24,6 @@ return [
     |
     */
     'google' => [
-        // To be moved to .env
         "type" => "service_account",
         "project_id" => "inspiring-modem-370612",
         "private_key_id" => env('GOOGLE_PRIVATE_KEY_ID'),
@@ -34,7 +33,7 @@ return [
         "auth_uri" => "https://accounts.google.com/o/oauth2/auth",
         "token_uri" => "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url" => "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url" => "https://www.googleapis.com/robot/v1/metadata/x509/sheet-apier%40inspiring-modem-370612.iam.gserviceaccount.com"
+        "client_x509_cert_url" => env('GOOGLE_CLIENT_X509_CERT_URL')
     ]
 
 ];
