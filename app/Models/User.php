@@ -23,7 +23,7 @@ use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 
 class User extends Authenticatable implements
     // MustVerifyMobileInterface,
-    // MustVerifyTwoFactor,
+    MustVerifyTwoFactor,
     MustVerifyEmail,
     HasMedia
 {

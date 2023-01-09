@@ -16,7 +16,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function verify(Request $request, TwoFactorService $service)
     {
-        if (!$this->iShouldntBeHere()) return $this->apiResponse(__('Already authenticated'));
+        if ($this->iShouldntBeHere()) return $this->apiResponse(__('Already authenticated'));
 
         $service->verify($request, $request->user());
 
@@ -29,7 +29,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function send(Request $request, TwoFactorService $service)
     {
-        if (!$this->iShouldntBeHere()) return $this->apiResponse(__('Already authenticated'));
+        if ($this->iShouldntBeHere()) return $this->apiResponse(__('Already authenticated'));
 
         $service->send($request, $request->user());
 

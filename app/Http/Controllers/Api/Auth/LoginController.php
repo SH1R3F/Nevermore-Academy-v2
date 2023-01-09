@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -36,8 +37,7 @@ class LoginController extends Controller
 
         $user = $request->user();
 
-        // Generate 2fa code
-        $user->forceFill(['two_fa_code' => rand(111111, 999999), 'two_fa_expires_at' => now()->addMinutes(10),])->save();
+        $this->generate2fa($user);
 
         // Issue token
         $token = $user->createToken('accessToken');
@@ -61,5 +61,21 @@ class LoginController extends Controller
         return $this->apiResponse(
             __('Logged out successfully')
         );
+    }
+
+    private function generate2fa($user)
+    {
+        // Generate 2fa code
+        if (request()->expectsJson()) {
+            // Remember for a day
+            Cache::remember("user_{$user->id}_2fa", 60 * 60 * 24, function () {
+                return [
+                    'two_fa_code' => rand(111111, 999999),
+                    'two_fa_expires_at' => now()->addMinutes(10)
+                ];
+            });
+        } else {
+            $user->forceFill(['two_fa_code' => rand(111111, 999999), 'two_fa_expires_at' => now()->addMinutes(10),])->save();
+        }
     }
 }

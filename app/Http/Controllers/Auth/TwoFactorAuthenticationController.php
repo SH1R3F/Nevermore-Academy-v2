@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\MustVerifyTwoFactor;
 use App\Providers\RouteServiceProvider;
+use App\Services\Auth\TwoFactorService;
 use Illuminate\Support\Facades\Session;
 
 class TwoFactorAuthenticationController extends Controller
@@ -27,7 +28,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function send(Request $request, TwoFactorService $service)
     {
-        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
+        if ($this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
 
         $service->send($request, Auth::user());
         Session::put('2fa_choice', $request->choice);
@@ -40,7 +41,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function showVerifyForm()
     {
-        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
+        if ($this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
         return view('auth.2fa-verify');
     }
 
@@ -49,7 +50,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function verify(Request $request, TwoFactorService $service)
     {
-        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
+        if ($this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
 
         $service->verify($request, Auth::user());
 
@@ -62,7 +63,7 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function resend()
     {
-        if (!$this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
+        if ($this->iShouldntBeHere()) return redirect(RouteServiceProvider::HOME);
         if (Session::has('2fa_choice')) Auth::user()->sendTwoFactorAuthenticationNotification(session('2fa_choice'));
         return redirect()->back()->with('status', "A verification code has been resent");
     }
@@ -70,7 +71,6 @@ class TwoFactorAuthenticationController extends Controller
     public function iShouldntBeHere()
     {
         $user = Auth::user();
-
         return (!$user instanceof MustVerifyTwoFactor || // If not implementing interface
             $user->hasVerifiedTwoFactorAuthentication() || // Already verified
             (!$user->hasVerifiedMobile() && !$user->hasVerifiedEmail()) // Has nothing verified yet. (We don't want to lock him out)

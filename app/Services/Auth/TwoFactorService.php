@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TwoFactorService
 {
@@ -14,12 +15,21 @@ class TwoFactorService
             'code' => [
                 'required',
                 'numeric',
-                function ($attribute, $value, $fail) use ($user) {
-                    // Check equal validity
-                    if ($value != $user->two_fa_code) return $fail(__("The :attribute is incorrect", ['attribute' => $attribute]));
+                function ($attribute, $value, $fail) use ($user, $request) {
 
-                    // Check time validity
-                    if ($user->two_fa_expires_at->lt(now())) return $fail(__("The :attribute is expired", ['attribute' => $attribute]));
+                    if ($request->expectsJson()) {
+                        $data = Cache::get("user_{$user->id}_2fa");
+                        // Check time validity
+                        if (!$data || $data['two_fa_expires_at']->lt(now())) return $fail(__("The :attribute is expired", ['attribute' => $attribute]));
+
+                        // Check equal validity
+                        if ($value != $data['two_fa_code']) return $fail(__("The :attribute is incorrect", ['attribute' => $attribute]));
+                    } else {
+                        // Check equal validity
+                        if ($value != $user->two_fa_code) return $fail(__("The :attribute is incorrect", ['attribute' => $attribute]));
+                        // Check time validity
+                        if ($user->two_fa_expires_at->lt(now())) return $fail(__("The :attribute is expired", ['attribute' => $attribute]));
+                    }
                 }
             ]
         ]);

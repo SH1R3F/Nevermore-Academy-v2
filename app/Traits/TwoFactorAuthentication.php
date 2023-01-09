@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Notifications\SendTwoFactorAuthenticationCode;
+use Illuminate\Support\Facades\Cache;
 
 trait TwoFactorAuthentication
 {
@@ -14,7 +15,15 @@ trait TwoFactorAuthentication
      */
     public function hasVerifiedTwoFactorAuthentication()
     {
-        return is_null($this->two_fa_code);
+        if (request()->expectsJson()) {
+            $data = Cache::get("user_{$this->id}_2fa");
+            if ($data) {
+                return is_null($data['two_fa_code']);
+            }
+            return false;
+        } else {
+            return is_null($this->two_fa_code);
+        }
     }
 
     /**
@@ -24,10 +33,17 @@ trait TwoFactorAuthentication
      */
     public function markTwoFactorAuthenticated()
     {
-        $this->forceFill([
-            'two_fa_code' => null,
-            'two_fa_expires_at' => null,
-        ])->save();
+        if (request()->expectsJson()) {
+            Cache::put("user_{$this->id}_2fa", [
+                'two_fa_code' => null,
+                'two_fa_expires_at' => null
+            ], 60 * 60 * 24);
+        } else {
+            $this->forceFill([
+                'two_fa_code' => null,
+                'two_fa_expires_at' => null,
+            ])->save();
+        }
     }
 
     /**
@@ -37,10 +53,17 @@ trait TwoFactorAuthentication
      */
     public function sendTwoFactorAuthenticationNotification(string $via)
     {
-        $this->forceFill([
-            'two_fa_code' => rand(111111, 999999),
-            'two_fa_expires_at' => now()->addMinutes(10),
-        ])->save();
-        $this->notify(new SendTwoFactorAuthenticationCode($via));
+        if (request()->expectsJson()) {
+            Cache::put("user_{$this->id}_2fa", [
+                'two_fa_code' => $code = rand(111111, 999999),
+                'two_fa_expires_at' => now()->addMinutes(10),
+            ], 60 * 60 * 24);
+        } else {
+            $this->forceFill([
+                'two_fa_code' => $code = rand(111111, 999999),
+                'two_fa_expires_at' => now()->addMinutes(10),
+            ])->save();
+        }
+        $this->notify(new SendTwoFactorAuthenticationCode($via, $code));
     }
 }

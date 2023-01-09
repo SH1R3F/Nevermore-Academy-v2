@@ -17,8 +17,9 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        app()->setLocale($request->segment(1));
-        URL::defaults(['locale' => $request->segment(1)]);
+        $seg = $request->expectsJson() ? 2 : 1;
+        app()->setLocale($request->segment($seg));
+        URL::defaults(['locale' => $request->segment($seg)]);
 
         // To solve the segment problem?
         $request->route()->forgetParameter('locale');

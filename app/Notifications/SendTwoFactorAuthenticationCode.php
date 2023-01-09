@@ -14,15 +14,17 @@ class SendTwoFactorAuthenticationCode extends Notification
     use Queueable;
 
     public $via;
+    public $code;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($via)
+    public function __construct($via, $code)
     {
         $this->via = in_array($via, ['mail', 'sms']) ? $via : 'mail'; // Set mail as default
+        $this->code = $code;
     }
 
     /**
@@ -47,7 +49,7 @@ class SendTwoFactorAuthenticationCode extends Notification
         return (new MailMessage)
             ->line('This is your two factor authentication code.')
             ->line('Please don\'t share it with anyone.')
-            ->line($notifiable->two_fa_code);
+            ->line($this->code);
     }
 
     /**
@@ -59,6 +61,6 @@ class SendTwoFactorAuthenticationCode extends Notification
     public function toTwilio($notifiable)
     {
         return (new TwilioSmsMessage)
-            ->content("Your 2fa code for Nevermore is: {$notifiable->two_fa_code}");
+            ->content("Your 2fa code for Nevermore is: {$this->code}");
     }
 }
