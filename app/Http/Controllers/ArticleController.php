@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Exports\ArticlesExport;
+use App\Facades\SpreadSheet;
 use App\Services\ArticleService;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -53,7 +54,11 @@ class ArticleController extends Controller
     public function export()
     {
         $this->authorize('viewAny', Article::class);
-        return Excel::download(new ArticlesExport, 'articles.xlsx');
+
+        // return Excel::download(new ArticlesExport, 'articles.xlsx');
+        $url = SpreadSheet::export(new ArticlesExport, 'articles');
+
+        return redirect()->to($url);
     }
 
     /**

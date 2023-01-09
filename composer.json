@@ -11,6 +11,7 @@
         "php": "^8.0.2",
         "astrotomic/laravel-translatable": "^11.11",
         "carlos-meneses/laravel-mpdf": "^2.1",
+        "google/apiclient": "^2.13",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.4",
         "laravel-notification-channels/twilio": "^3.2",
