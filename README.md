@@ -23,7 +23,7 @@
 [x] Morph taggables.
 10-1-2022:
 [x] Add branches locations using mysql spatial types
-[] Add firebase notifications
+[x] Add firebase notifications
 
 ---
 
@@ -64,4 +64,6 @@ Problems I'm facing:\
 10-1-2022:\
 List the branches of the academy which basically are in Egypt, Libya, and Tunisia.\
 For the sake of simplicity and trying to focus efforts only on spatial type. users will have a default location in Egypt (Without giving them the ability to change or store it). Also, branches section has no authorization and can be accessed by anyone only on web (Api won't be done for this section).\
-So, Laravel can't display a spatial type column. thus I wrote a cast to run a query to return it as a text.
+So, Laravel can't display a spatial type column. thus I wrote a cast to run a query to return it as a text.\
+
+Add firebase custom channel to notifications and implement it to the functionality of pushing notification to users.

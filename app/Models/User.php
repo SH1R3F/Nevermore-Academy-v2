@@ -50,7 +50,8 @@ class User extends Authenticatable implements
         'password',
         'mobile_verification_code',
         'two_fa_code',
-        'role_id'
+        'role_id',
+        'fcm_token'
     ];
 
     /**

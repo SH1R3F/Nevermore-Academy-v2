@@ -12,6 +12,7 @@ const form = useForm({
         mail: false,
         database: false,
         sms: false,
+        firebase: false,
     },
 });
 </script>
@@ -141,6 +142,14 @@ const form = useForm({
                                                     v-model="form.via.sms"
                                                 />
                                                 SMS
+                                            </label>
+                                            <label for="firebase">
+                                                <input
+                                                    type="checkbox"
+                                                    id="firebase"
+                                                    v-model="form.via.firebase"
+                                                />
+                                                Firebase notification
                                             </label>
                                         </div>
                                         <span

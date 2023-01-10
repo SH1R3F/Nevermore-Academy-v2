@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('two_fa_code')->nullable();
             $table->timestamp('two_fa_expires_at')->nullable();
             $table->string('password');
+            $table->string('fcm_token')->nullable();
             $table->point('location')->default(DB::raw("(ST_GeomFromText('POINT(27.661024 37.959821)'))")); // Saudi arabia
             $table->rememberToken();
             $table->timestamps();

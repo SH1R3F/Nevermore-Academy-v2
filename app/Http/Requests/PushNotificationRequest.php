@@ -28,7 +28,7 @@ class PushNotificationRequest extends FormRequest
             'recipients'   => ['present', 'array'],
             'recipients.*' => ['exists:roles,name'],
             'via'   => ['present', 'array'],
-            'via.*' => ['in:database,sms,mail'],
+            'via.*' => ['in:database,sms,mail,firebase'],
         ];
     }
 

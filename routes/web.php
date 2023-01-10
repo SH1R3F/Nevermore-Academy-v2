@@ -1,15 +1,17 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\MobileVerificationController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
-use App\Http\Controllers\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,11 @@ Route::redirect('/', app()->getLocale());
 //      return response()->json(DB::table('jobs')->get()->toJson());
 // });
 
+Route::post('/save-device-token', function (Request $request) {
+    $request->validate(['token' => 'required']);
+    $request->user()->update(['fcm_token' => $request->token]);
+})->name('save-device-token');
+
 
 Route::group([
     'prefix' => '{locale}',
@@ -37,6 +44,7 @@ Route::group([
     /* Mobile verification routes */
     //
     Route::middleware('auth')->group(function () {
+
         // Mobile verification
         Route::get('verify-mobile', [MobileVerificationController::class, 'showVerifyForm'])->name('verify-mobile.notice');
         Route::post('verify-mobile', [MobileVerificationController::class, 'verify'])->name('verify-mobile.verify')->middleware('throttle:6,1');

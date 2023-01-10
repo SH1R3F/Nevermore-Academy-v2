@@ -50,6 +50,20 @@ class PushAlert extends Notification implements ShouldQueue
     }
 
     /**
+     * Get the firebase representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toFirebase($notifiable)
+    {
+        return [
+            'title' => 'Nevermore notification',
+            'body' => $this->msg
+        ];
+    }
+
+    /**
      * Get the sms representation of the notification.
      *
      * @param  mixed  $notifiable

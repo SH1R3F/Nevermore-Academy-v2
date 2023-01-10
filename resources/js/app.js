@@ -1,3 +1,5 @@
+require("./firebase");
+
 import { createApp, h } from "vue";
 import { createInertiaApp, Head, Link } from "@inertiajs/inertia-vue3";
 import App from "./Layouts/App.vue";
