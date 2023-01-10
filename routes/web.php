@@ -9,6 +9,7 @@ use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\MobileVerificationController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
+use App\Http\Controllers\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,11 @@ use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 */
 
 Route::redirect('/', app()->getLocale());
+
+// Route::get('/', function () {
+//      return response()->json(DB::table('jobs')->get()->toJson());
+// });
+
 
 Route::group([
     'prefix' => '{locale}',
@@ -82,5 +88,8 @@ Route::group([
         Route::get('articles/{article}/pdf', [ArticleController::class, 'pdf'])->name('articles.pdf');
         Route::get('articles/export', [ArticleController::class, 'export'])->name('articles.export');
         Route::resource('articles', ArticleController::class);
+
+        /* Branches management */
+        Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');
     });
 });

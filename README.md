@@ -21,6 +21,9 @@
 [x] Provide API on a subdomain\
 [x] Articles system [CRUD] with unique generated slug & images.\
 [x] Morph taggables.
+10-1-2022:
+[x] Add branches locations using mysql spatial types
+[] Add firebase notifications
 
 ---
 
@@ -56,4 +59,9 @@ Problems I'm facing:\
 -   Controllers that requires a parameter from the route expects the order of passed parameters to have the locale at first. Causes a problem with all other paramters. I Walked around it by a little trick to forget the locale param after using it in middleware `$request->route()->forgetParameter('locale');`
 -   Fortify codes are hidden with now way to update the logout redirection which leads to '/' without specifying locale. thus we would be redirected to other locales we don't want. Solved by creating another response and bind it instead of fortify logout response.
 -   Localizing records returned from database. Google says there're two ways to do this. an old insuffecient way (Saving translations in same table as different columns for each language you wanna add). and another better way by saving it in different tables for translation (Or maybe in same table with a different way of saving).
-    I'll be using the second way with an approach of saving it in same table but as json data by Spatie/Translatable package.
+    I'll be using the second way with an approach of saving it in same table but as json data by Spatie/Translatable package.\
+
+10-1-2022:\
+List the branches of the academy which basically are in Egypt, Libya, and Tunisia.\
+For the sake of simplicity and trying to focus efforts only on spatial type. users will have a default location in Egypt (Without giving them the ability to change or store it). Also, branches section has no authorization and can be accessed by anyone only on web (Api won't be done for this section).\
+So, Laravel can't display a spatial type column. thus I wrote a cast to run a query to return it as a text.

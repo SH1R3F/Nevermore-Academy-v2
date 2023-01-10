@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Location;
 use App\Models\Role;
 use App\Models\Article;
 use App\Traits\HasRoles;
@@ -23,7 +24,7 @@ use App\Interfaces\MustVerifyMobile as MustVerifyMobileInterface;
 
 class User extends Authenticatable implements
     // MustVerifyMobileInterface,
-    MustVerifyTwoFactor,
+    // MustVerifyTwoFactor,
     MustVerifyEmail,
     HasMedia
 {
@@ -76,6 +77,7 @@ class User extends Authenticatable implements
         'email_verified_at' => 'datetime',
         'mobile_verified_at' => 'datetime',
         'two_fa_expires_at' => 'datetime',
+        'location' => Location::class
     ];
 
     public function getPhoneNumberAttribute()
